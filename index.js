@@ -72,7 +72,12 @@ app.put("/hotels/:id",async (req, res) => {
 })
 
 
+app.delete("/hotels/:id", async (req, res) => {
+  console.log(`${req.params.id} deleted`);
+  await Hotel.findByIdAndDelete(req.params.id)
+  res.redirect(`/hotels`);
 
+});
 app.listen(3000, () => {
   console.log("listening on port 3000");
 });

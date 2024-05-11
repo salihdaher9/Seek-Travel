@@ -15,6 +15,12 @@
     <a href="http://localhost:3000/hotels">return</a>
 
     <a href="http://localhost:3000/hotels/<%= hotel._id %>/edit">edit</a>
+    <p>
+      <form action="/hotels/<%= hotel._id %>?_method=DELETE" method="POST">
+        <button>Delete</button>
+
+      </form>
+    </p>
 
 
   </footer>
