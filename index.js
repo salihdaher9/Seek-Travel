@@ -6,7 +6,6 @@ const Hotel=require('./models/hotel')
 
 
 mongoose.connect("mongodb://localhost:27017/Hotels_project", {
-
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -64,9 +63,9 @@ app.get("/hotels/:id/edit", async (req, res) => {
 });
 
 app.put("/hotels/:id",async (req, res) => {
-  console.log(req.params.id)
-  const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, { ...req.body.hotel,
-});
+  const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, { ...req.body.hotel,});
+  console.log(`${updatedHotel.name} updated`);
+
   res.redirect(`/hotels/${req.params.id}`);
 
 })
@@ -78,6 +77,12 @@ app.delete("/hotels/:id", async (req, res) => {
   res.redirect(`/hotels`);
 
 });
+
+
+app.use((req,res) => {
+  res.send("no such route");
+
+})
 app.listen(3000, () => {
   console.log("listening on port 3000");
 });
