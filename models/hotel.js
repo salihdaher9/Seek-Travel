@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const schema =mongoose.Schema;
 
 const HotelSchema = new schema({
-  name: String,
-  describtion: String,
-  image: String,
-  location: String,
-  rooms:[String]
+  name: { type: String, required: true },
+  describtion: { type: String, required: true },
+  image: { type: String, required: true },
+  location: { type: String, required: true },
+  rooms: [String],
 });
 
 
