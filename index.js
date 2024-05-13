@@ -3,7 +3,8 @@ const path = require("path");
 const mongoose=require("mongoose")
 const methodOverride = require("method-override");
 const Hotel=require('./models/hotel')
-
+const WrapAsync=require('./utils/catchAsync');
+const ExpressError=require('./utils/ExpressError');
 
 mongoose.connect("mongodb://localhost:27017/Hotels_project", {
   useNewUrlParser: true,
@@ -25,18 +26,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended :true}));
 app.use(methodOverride("_method"));
 
-function WrapAsync(fn) {
-  return function (req, res, next) {
-        console.log('WrapAsync middleware invoked');
-
-    fn(req, res, next)
-      .catch((error) => {
-        console.log('WrapAsync Error');
-        next(error); // Forward the error to the Express error handler
-      });
-  };
-}
-
 
 app.get("/hotels", async (req, res ) => {
   const hotels = await Hotel.find({});
@@ -52,7 +41,7 @@ app.post("/hotels",WrapAsync(async (req, res, next) => {
     console.log(body);
     body.rooms = [];
     const hotel = await new Hotel(body);
-    hotel.save();
+    await hotel.save();
     res.redirect(`/hotels/${hotel.id}`);
   })
 );
@@ -75,11 +64,19 @@ app.get("/hotels/:id/edit",WrapAsync(async (req, res) => {
   })
 );
 
-app.put("/hotels/:id",WrapAsync(async (req, res) => {
-    const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, {...req.body.hotel,});
-    console.log(`${updatedHotel.name} updated`);
-
-    res.redirect(`/hotels/${req.params.id}`);
+app.put("/hotels/:id",WrapAsync(async (req, res,next) => {
+    if (req.body.hotel.id  != '' && req.body.hotel.name  != '' &&req.body.hotel.description  != '' &&req.body.hotel.image  !='' &&req.body.hotel.location  != '') {
+      console.log(req.body.hotel);
+      const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, {
+        ...req.body.hotel,
+      });
+      console.log(`${updatedHotel.name} updated`);
+      res.redirect(`/hotels/${req.params.id}`);
+    } 
+    else {
+      console.log({ ...req.body.hotel });
+      next(new ExpressError("missing parameters", 404));
+    }
   })
 );
 
