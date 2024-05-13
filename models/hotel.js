@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Room = require("./room.js");
+const Review = require("./review.js");
 const schema =mongoose.Schema;
 
 const HotelSchema = new schema({
@@ -6,9 +8,9 @@ const HotelSchema = new schema({
   describtion: { type: String, required: true },
   image: { type: String, required: true },
   location: { type: String, required: true },
-  rooms: [String],
+  Rooms: [{ type: schema.Types.ObjectId, ref: "Room", required: true }],
+  Reviews: [{ type: schema.Types.ObjectId, ref: "Review"}]
 });
 
+module.exports = mongoose.model("Hotel", HotelSchema);;
 
-
-module.exports = mongoose.model('Hotel', HotelSchema);

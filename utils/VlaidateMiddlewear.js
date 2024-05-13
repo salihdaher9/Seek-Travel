@@ -5,6 +5,7 @@ const ExpressError = require("../utils/ExpressError")
 
 const validateHotelSchema = (req, res, next) => {
   req.body.hotel.rooms = [];
+  req.body.hotel.rooms = [];
   const HotelSchemaJoi = Joi.object({
     hotel: Joi.object({
       name: Joi.string().required(),

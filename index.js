@@ -3,6 +3,8 @@ const path = require("path");
 const mongoose=require("mongoose")
 const methodOverride = require("method-override");
 const Hotel=require('./models/hotel')
+const Room = require("./models/room");
+
 const WrapAsync=require('./utils/catchAsync');
 const ExpressError=require('./utils/ExpressError');
 const ValidateHotelSchema = require("./utils/VlaidateMiddlewear"); //schema validation Joi middleware 
