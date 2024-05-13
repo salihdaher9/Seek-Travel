@@ -5,6 +5,7 @@ const methodOverride = require("method-override");
 const Hotel=require('./models/hotel')
 const WrapAsync=require('./utils/catchAsync');
 const ExpressError=require('./utils/ExpressError');
+const ValidateHotelSchema = require("./utils/VlaidateMiddlewear"); //schema validation Joi middleware 
 
 mongoose.connect("mongodb://localhost:27017/Hotels_project", {
   useNewUrlParser: true,
@@ -36,15 +37,15 @@ app.get("/hotels/new", WrapAsync(async (req, res) => {
   res.render("Hotels/new");
 }));
 
-app.post("/hotels",WrapAsync(async (req, res, next) => {
+app.post("/hotels",ValidateHotelSchema,WrapAsync(async (req, res, next) => {
+   
     const body = req.body.hotel;
-    console.log(body);
-    body.rooms = [];
-    const hotel = await new Hotel(body);
+    const hotel =  new Hotel(body);
     await hotel.save();
-    res.redirect(`/hotels/${hotel.id}`);
-  })
-);
+    console.log(`${hotel.name} Hotel saved`);
+    res.redirect(`/hotels/${hotel.id}`);    
+
+}));
 
 app.get("/hotels/:id", WrapAsync(async (req, res,next) => {
   const hotel = await Hotel.findById(req.params.id);
@@ -64,21 +65,11 @@ app.get("/hotels/:id/edit",WrapAsync(async (req, res) => {
   })
 );
 
-app.put("/hotels/:id",WrapAsync(async (req, res,next) => {
-    if (req.body.hotel.id  != '' && req.body.hotel.name  != '' &&req.body.hotel.description  != '' &&req.body.hotel.image  !='' &&req.body.hotel.location  != '') {
-      console.log(req.body.hotel);
-      const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, {
-        ...req.body.hotel,
-      });
+app.put("/hotels/:id",ValidateHotelSchema,WrapAsync(async (req, res,next) => {
+      const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, {...req.body.hotel,});
       console.log(`${updatedHotel.name} updated`);
       res.redirect(`/hotels/${req.params.id}`);
-    } 
-    else {
-      console.log({ ...req.body.hotel });
-      next(new ExpressError("missing parameters", 404));
-    }
-  })
-);
+}));
 
 
 app.delete("/hotels/:id",WrapAsync(async (req, res) => {
@@ -89,16 +80,17 @@ app.delete("/hotels/:id",WrapAsync(async (req, res) => {
 );
 
 
-app.use((req,res) => {
-  res.status(404).send("no such route");
+app.all('*',(req,res,next) => {
+      next(new ExpressError("Something went wrong", 404));
 
 })
 
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Something went wrong" } = err;
-  res.status(status).send(message);
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.render("error", { message, statusCode });
 });
+
 app.listen(3000, () => {
   console.log("listening on port 3000");
 });
