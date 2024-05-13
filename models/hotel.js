@@ -12,5 +12,19 @@ const HotelSchema = new schema({
   Reviews: [{ type: schema.Types.ObjectId, ref: "Review"}]
 });
 
-module.exports = mongoose.model("Hotel", HotelSchema);;
+
+
+HotelSchema.post('findOneAndDelete',async function(hotel){
+  if (hotel.Rooms.length) {
+    await Room.deleteMany({ _id: { $in: hotel.Rooms } });
+  }
+  if (hotel.Review.length) {
+    await Review.deleteMany({ _id: { $in: hotel.Reviews } });
+  }
+  console.log('pre deletion');
+  console.log(data)
+
+})
+
+module.exports = mongoose.model("Hotel", HotelSchema);
 
