@@ -6,11 +6,10 @@ const methodOverride = require("method-override");
 const Hotel=require('./models/hotel')
 const Room = require("./models/room");
 const Review = require("./models/review");
-
-
 const WrapAsync=require('./utils/catchAsync');
 const ExpressError=require('./utils/ExpressError');
-const ValidateHotelSchema = require("./utils/VlaidateMiddlewear"); //schema validation Joi middleware 
+const ValidateHotelSchema = require("./utils/VlaidateMiddlewear"); //hotel schema validation Joi middleware 
+const validateReviewsScema = require("./utils/ValidateReview");    //review schema validation Joi middleware
 
 mongoose.connect("mongodb://localhost:27017/Hotels_project", {
   useNewUrlParser: true,
@@ -86,7 +85,7 @@ app.delete("/hotels/:id",WrapAsync(async (req, res) => {
 
 
 
-app.post("/hotels/:id/reviews",WrapAsync(async (req, res) => {
+app.post("/hotels/:id/reviews",validateReviewsScema,WrapAsync(async (req, res) => {
   const review =new Review(req.body.review);
   
   id=req.params.id;
