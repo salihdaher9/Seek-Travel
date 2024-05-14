@@ -1,34 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>edit </title>
-</head>
-<body>
-  <h1> Edit hotel</h1>
-  <form  action="/hotels/<%=hotel._id %>?_method=PUT" method="POST"> 
-    <label><%= hotel._id %></label>
-    <div>
-      <label for="name">Name</label>
-      <input type="text" name="hotel[name]" id="name" value="<%= hotel.name %>">
-    </div>
-    <div>
-      <label for="descriptoin">descriptoin</label>
-      <input type="text" name="hotel[describtion]" id="describtion"  value="<%= hotel.describtion %>">
-    </div>
-    <div>
-      <label for="image">image</label>
-      <input type="text" name="hotel[image]" id="image" value="<%= hotel.image %>">
-    </div>
-    <div>
-      <label for="location">location</label>
-      <input type="text" name="hotel[location]" id="location" value="<%= hotel.location %>">
-    </div>
-    <button>Update hotel</button>
-    <a href="http://localhost:3000/hotels/<%= hotel._id %>">return</a>
+<% layout('layouts/boilerplate')%>
+ 
 
 
   
-</body>
-</html>
+    <div class="row">
+      <h1 class="text-center"> Edit hotel</h1>
+      <div class="col-6 offset-3">
+        <form  action="/hotels/<%=hotel._id %>?_method=PUT" method="POST"> 
+  
+        <div class="mb-3">
+          <label class="form-label" for="name">Name</label>
+          <input class="form-control" type="text" name="hotel[name]" id="name" value="<%= hotel.name %>">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="descriptoin">descriptoin</label>
+          <input class="form-control" type="text" name="hotel[describtion]" id="describtion" value="<%= hotel.describtion %>">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="image">image</label>
+          <input class="form-control" type="text" name="hotel[image]" id="image" value="<%= hotel.image %>">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="location">location</label>
+          <input class="form-control" type="text" name="hotel[location]" id="location" value="<%= hotel.location %>">
+        </div>
+        <div class="mb-3">
+        <button class="btn btn-success">Update hotel</button>
+      </div>
+        </form>
+        <a href="/hotels/<%= hotel._id%>">Back To Hotel</a>
+        </div>
+       
+     
+    </div>

@@ -1,20 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hotels</title>
-</head>
-<body>
+<% layout('layouts/boilerplate')%>
   <h1>Hotels</h1>
-  <a href="http://localhost:3000/hotels/new">add hotel</a>
+  <div>
+    <a href="http://localhost:3000/hotels/new">add hotel</a>
+  </div>
+ 
+   
+    <% for (let hotel of hotels){%>
+      <div class="card" mb-3>
+          <div class="row">
+              <div class="col-md-4">
+                  <img class="img-fluid" alt="" src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+              </div>
+              <div class="col-md-8">
+                  <div class="card-body">
+                      <h5 class="card-title"><%= hotel.name %> </h5>
+                      <p class="card-text"><%= hotel.describtion %></p>
+                      <p class="card-text">
+                          <small class="text-muted"><%= hotel.location%></small>
+                      </p>
+                      <a class="btn btn-primary" href="http://localhost:3000/hotels/<%=hotel.id%>">View <%= hotel.name %></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <% }%>
 
-  <ul>
-    <% for (let hotel of hotels){ %>
-      <li> <a href="http://localhost:3000/hotels/<%=hotel.id%>"><%= hotel.name %></a>  </li>
-    <%} %>
-
-  </ul>
   
-</body>
-</html>
