@@ -1,9 +1,12 @@
 const express = require("express");
 const path = require("path");
 const mongoose=require("mongoose")
+const ejsMate = require("ejs-mate")
 const methodOverride = require("method-override");
 const Hotel=require('./models/hotel')
 const Room = require("./models/room");
+const Review = require("./models/review");
+
 
 const WrapAsync=require('./utils/catchAsync');
 const ExpressError=require('./utils/ExpressError');
@@ -22,7 +25,7 @@ db.once("open", () => {
 });
 
 const app = express();
-
+app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -81,6 +84,20 @@ app.delete("/hotels/:id",WrapAsync(async (req, res) => {
   })
 );
 
+
+
+app.post("/hotels/:id/reviews",WrapAsync(async (req, res) => {
+  const review =new Review(req.body.review);
+  
+  id=req.params.id;
+  const hotel = await Hotel.findById(id).populate("Reviews");
+  hotel.Reviews.push(review)
+  await review.save();
+  await hotel.save()
+  console.log(hotel)
+  res.redirect(`/hotels/${id}`);
+
+}));
 
 app.all('*',(req,res,next) => {
       next(new ExpressError("Something went wrong", 404));

@@ -21,6 +21,18 @@
 
       </form>
     </p>
+    <form action="/hotels/<%=hotel._id%>/reviews" method="POST">
+      
+      
+      <label for="body">Review</label>
+      <textarea id="body" name="review[body]" cols="20" rows="3"></textarea>
+
+      <div>
+        <label for="rating">Rating</label>
+      <input type="range" min="1" max="5" id="body" name="review[rating]">
+      </div>
+      <button>Submit</button>
+    </form>
 
 
   </footer>
