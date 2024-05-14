@@ -87,14 +87,19 @@ app.delete("/hotels/:id", WrapAsync(async (req, res) => {
 
 app.post("/hotels/:id/reviews",validateReviewsScema,WrapAsync(async (req, res) => {
   const review =new Review(req.body.review);
-  
   id=req.params.id;
   const hotel = await Hotel.findById(id).populate("Reviews");
   hotel.Reviews.push(review)
   await review.save();
   await hotel.save()
-  console.log(hotel)
   res.redirect(`/hotels/${id}`);
+}));
+
+app.delete('/hotels/:id/reviews/:reviewId',WrapAsync(async (req, res,next) => {
+  const {id,reviewId}=req.params
+  await Hotel.findByIdAndUpdate(id, { $pull: { review: reviewId } });
+  await Review.findByIdAndDelete(reviewId)
+  res.redirect(`/hotels/${id}`)
 
 }));
 

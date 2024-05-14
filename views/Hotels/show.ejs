@@ -44,12 +44,16 @@
 
         <button class="btn btn-success">Submit</button>
       </form>
-
       <% for(let rev of hotel.Reviews){%>      
         <div class="card" style="width: 18rem;">
           <div class="card-body">
             <h5 class="card-title">Rating: <%= rev.rating %></h5>
             <p class="card-text"> <%= rev.body %> </p>
+            <form action="/hotels/<%=hotel._id%>/reviews/<%=rev._id%>?_method=DELETE" method="POST"  >
+               <button 
+                class="btn btn-danger float-left">Delete</button>
+            </form>
+
           </div>
         </div>
       <% } %>
