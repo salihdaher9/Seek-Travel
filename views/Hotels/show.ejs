@@ -30,15 +30,15 @@
       <h1>Leave a Review</h1>
       <form action="/hotels/<%=hotel._id%>/reviews" method="POST">
         <div class="mb-3">
-          <label for="rating">Rating</label>
+          <label style="font-size: larger;" for="rating">Rating</label>
         <input type="range" min="1" max="5" id="body" name="review[rating]">
         </div>
         <div>
           <div>
-              <label for="body">Review</label>
+              <label style="font-size: larger;" for="body">Review</label>
 
           </div>
-          <textarea id="body" name="review[body]" cols="20" rows="3"></textarea>
+          <textarea id="body" name="review[body]" cols="70" rows="3"></textarea>
     
         </div>
 
