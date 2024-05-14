@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Room = require("./room.js");
 const Review = require("./review.js");
 const schema =mongoose.Schema;
+const { Schema, Types } = mongoose; // Importing Types from mongoose
 
 const HotelSchema = new schema({
   name: { type: String, required: true },
@@ -15,14 +16,13 @@ const HotelSchema = new schema({
 
 
 HotelSchema.post('findOneAndDelete',async function(hotel){
-  if (hotel.Rooms.length) {
+  if (hotel.Rooms.length>0) {
     await Room.deleteMany({ _id: { $in: hotel.Rooms } });
   }
-  if (hotel.Review.length) {
+  if (hotel.Reviews.length > 0) {
     await Review.deleteMany({ _id: { $in: hotel.Reviews } });
   }
-  console.log('pre deletion');
-  console.log(data)
+
 
 })
 
