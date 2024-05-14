@@ -31,18 +31,18 @@
       <form action="/hotels/<%=hotel._id%>/reviews" method="POST">
         <div class="mb-3">
           <label style="font-size: larger;" for="rating">Rating</label>
-        <input type="range" min="1" max="5" id="body" name="review[rating]">
+          <input type="range"  class="form-range"  min="1" max="5" id="body" name="review[rating]">
         </div>
         <div>
           <div>
-              <label style="font-size: larger;" for="body">Review</label>
+              <label style="font-size: larger;" for="body" class="mb-3">Review</label>
 
           </div>
-          <textarea id="body" name="review[body]" cols="70" rows="3"></textarea>
+          <textarea class="form-control mb-3" id="body" name="review[body]" cols="70" rows="3"></textarea>
     
         </div>
 
-        <button class="btn btn-success">Submit</button>
+        <button class="btn btn-success mb-3">Submit</button>
       </form>
       <% for(let rev of hotel.Reviews){%>      
         <div class="card" style="width: 18rem;">
