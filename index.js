@@ -52,7 +52,7 @@ app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
 }));
 
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {
-  const hotel = await Hotel.findById(req.params.id);
+  const hotel = await Hotel.findById(req.params.id).populate("Reviews");
   if (!hotel) {
     throw new Error("error getting hotel")
   }

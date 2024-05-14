@@ -2,7 +2,7 @@
  
 
   <div class="row">
-    <div class="col-6 offset-3">
+    <div class="col-6 ">
         <div class="card mb-3">
             <img src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
             <div class="card-body">
@@ -22,20 +22,37 @@
                 </form>
                 
             </div>
-            <form action="/hotels/<%=hotel._id%>/reviews" method="POST">
-      
-      
-              <label for="body">Review</label>
-              <textarea id="body" name="review[body]" cols="20" rows="3"></textarea>
-        
-              <div>
-                <label for="rating">Rating</label>
-              <input type="range" min="1" max="5" id="body" name="review[rating]">
-              </div>
-              <button class="btn btn-success">Submit</button>
-            </form>
-            
+
         </div>
+    </div>
+
+    <div class="col-6 ">
+      <h1>Leave a Review</h1>
+      <form action="/hotels/<%=hotel._id%>/reviews" method="POST">
+        <div class="mb-3">
+          <label for="rating">Rating</label>
+        <input type="range" min="1" max="5" id="body" name="review[rating]">
+        </div>
+        <div>
+          <div>
+              <label for="body">Review</label>
+
+          </div>
+          <textarea id="body" name="review[body]" cols="20" rows="3"></textarea>
+    
+        </div>
+
+        <button class="btn btn-success">Submit</button>
+      </form>
+
+      <% for(let rev of hotel.Reviews){%>      
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Rating: <%= rev.rating %></h5>
+            <p class="card-text"> <%= rev.body %> </p>
+          </div>
+        </div>
+      <% } %>
     </div>
 </div>
 
