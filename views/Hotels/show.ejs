@@ -1,43 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1><%= hotel.name %></h1>
-  <h2><%= hotel.location%></h2>
-  <h1><%= hotel.image %></h1>
-  <p><%= hotel.describtion %></p>
-  <h1><%= hotel.rooms %></h1>
-  <footer>
-    <a href="http://localhost:3000/hotels">return</a>
+<% layout('layouts/boilerplate')%>
+ 
 
-    <a href="http://localhost:3000/hotels/<%= hotel._id %>/edit">edit</a>
-    <p>
-      <form action="/hotels/<%= hotel._id %>?_method=DELETE" method="POST">
-        <button>Delete</button>
+  <div class="row">
+    <div class="col-6 offset-3">
+        <div class="card mb-3">
+            <img src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"><%= hotel.name %>%></h5>
+                <p class="card-text"><%= hotel.describtion%></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-muted"><%= hotel.location%></li>
 
-      </form>
-    </p>
-    <form action="/hotels/<%=hotel._id%>/reviews" method="POST">
+            </ul>
+            <div class="card-body">
+              
+                <a class="card-link btn btn-info" href="http://localhost:3000/hotels/<%= hotel._id %>/edit">Edit</a>
+
+                <form class="d-inline" action="/hotels/<%= hotel._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+                
+            </div>
+            <form action="/hotels/<%=hotel._id%>/reviews" method="POST">
       
       
-      <label for="body">Review</label>
-      <textarea id="body" name="review[body]" cols="20" rows="3"></textarea>
+              <label for="body">Review</label>
+              <textarea id="body" name="review[body]" cols="20" rows="3"></textarea>
+        
+              <div>
+                <label for="rating">Rating</label>
+              <input type="range" min="1" max="5" id="body" name="review[rating]">
+              </div>
+              <button class="btn btn-success">Submit</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
 
-      <div>
-        <label for="rating">Rating</label>
-      <input type="range" min="1" max="5" id="body" name="review[rating]">
-      </div>
-      <button>Submit</button>
-    </form>
 
-
-  </footer>
-
-
-  
-</body>
-</html>
