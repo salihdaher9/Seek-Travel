@@ -1,12 +1,12 @@
 <% layout('layouts/boilerplate')%>
-  <h1>Hotels</h1>
+  <h1>Hotels : <%= Object.keys(hotels).length %> properties found</h1>
   <div>
-    <a href="http://localhost:3000/hotels/new">Add hotel</a>
+    <a href="http://localhost:3000/hotels/new">add hotel</a>
   </div>
  
    
     <% for (let hotel of hotels){%>
-      <div class="card" mb-3>
+      <div class="card mb-3">
           <div class="row">
               <div class="col-md-4">
                   <img class="img-fluid" alt="" src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">

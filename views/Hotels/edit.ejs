@@ -6,23 +6,35 @@
     <div class="row">
       <h1 class="text-center"> Edit hotel</h1>
       <div class="col-6 offset-3">
-        <form  action="/hotels/<%=hotel._id %>?_method=PUT" method="POST"> 
+        <form novalidate class="validated-form"  action="/hotels/<%=hotel._id %>?_method=PUT" method="POST"> 
   
         <div class="mb-3">
           <label class="form-label" for="name">Name</label>
-          <input class="form-control" type="text" name="hotel[name]" id="name" value="<%= hotel.name %>">
+          <input class="form-control" type="text" name="hotel[name]" id="name" value="<%= hotel.name %>" required>
+          <div class="valid-feedback">
+            Looks good!
+        </div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="descriptoin">descriptoin</label>
-          <input class="form-control" type="text" name="hotel[describtion]" id="describtion" value="<%= hotel.describtion %>">
+          <input class="form-control" type="text" name="hotel[describtion]" id="describtion" value="<%= hotel.describtion %>" required>
+          <div class="valid-feedback">
+            Looks good!
+        </div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="image">image</label>
-          <input class="form-control" type="text" name="hotel[image]" id="image" value="<%= hotel.image %>">
+          <input class="form-control" type="text" name="hotel[image]" id="image" value="<%= hotel.image %>" required>
+          <div class="valid-feedback">
+            Looks good!
+        </div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="location">location</label>
-          <input class="form-control" type="text" name="hotel[location]" id="location" value="<%= hotel.location %>">
+          <input class="form-control" type="text" name="hotel[location]" id="location" value="<%= hotel.location %>" required>
+          <div class="valid-feedback">
+            Looks good!
+        </div>
         </div>
         <div class="mb-3">
         <button class="btn btn-success">Update hotel</button>
