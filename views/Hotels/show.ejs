@@ -22,6 +22,9 @@
                 </form>
                 
             </div>
+            <div class="card-footer text-muted">
+              2 days ago
+          </div>
 
         </div>
     </div>
@@ -44,11 +47,13 @@
 
         <button class="btn btn-success mb-3">Submit</button>
       </form>
+      <hr>
+      <br>
       <% for(let rev of hotel.Reviews){%>      
-        <div class="card" style="width: 18rem;">
+        <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">Rating: <%= rev.rating %></h5>
-            <p class="card-text"> <%= rev.body %> </p>
+            <h5 class="card-title">Rating: <%= rev.rating %> / 5</h5>
+            <p class="card-text">Review: <%= rev.body %> </p>
             <form action="/hotels/<%=hotel._id%>/reviews/<%=rev._id%>?_method=DELETE" method="POST"  >
                <button 
                 class="btn btn-danger float-left">Delete</button>
@@ -57,6 +62,7 @@
           </div>
         </div>
       <% } %>
+    
     </div>
 </div>
 
