@@ -6,14 +6,18 @@ const ExpressError = require("../utils/ExpressError")
 const validateHotelSchema = (req, res, next) => {
   req.body.hotel.Rooms = [];
   req.body.hotel.Reviews = [];
+  req.body.hotel.Reservations = [];
+
+  
   const HotelSchemaJoi = Joi.object({
     hotel: Joi.object({
       name: Joi.string().required(),
-      describtion: Joi.string().required(), 
+      describtion: Joi.string().required(),
       image: Joi.string().required(),
       location: Joi.string().required(),
       Rooms: Joi.array().required(),
       Reviews: Joi.array().required(),
+      Reservations: Joi.array().required(), // Array of objects with two fields
     }).required(),
   });
 

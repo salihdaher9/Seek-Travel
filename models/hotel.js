@@ -4,13 +4,21 @@ const Review = require("./review.js");
 const schema =mongoose.Schema;
 const { Schema, Types } = mongoose; // Importing Types from mongoose
 
+const ReservationSchema = new Schema({
+  type: { type: String, required: true },
+  Date: { type: Date },
+});
+
+
+
 const HotelSchema = new schema({
   name: { type: String, required: true },
   describtion: { type: String, required: true },
-  image: { type: String, required: true },
+  images: [{ type: String, required: true }],
   location: { type: String, required: true },
   Rooms: [{ type: schema.Types.ObjectId, ref: "Room", required: true }],
-  Reviews: [{ type: schema.Types.ObjectId, ref: "Review"}]
+  Reviews: [{ type: schema.Types.ObjectId, ref: "Review" }],
+  Reservations: [{ type: schema.Types.ObjectId, ref: "ReservationSchema" }], // Array of objects with two fields
 });
 
 

@@ -9,7 +9,7 @@
                 <h5 class="card-title"><%= hotel.name %>%></h5>
                 <p class="card-text"><%= hotel.describtion%></p>
             </div>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush"> 
                 <li class="list-group-item text-muted"><%= hotel.location%></li>
 
             </ul>
@@ -20,7 +20,12 @@
                 <form class="d-inline" action="/hotels/<%= hotel._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
-                
+                <form class="d-inline" action="/hotels/<%= hotel._id %>/rooms" method="POST">
+                  <button type="submit" class="btn btn-success float-r">Add more Types!</button>
+                </form>
+                <form class="d-inline" action="/hotels/<%=hotel._id %>/rooms" method="Get">
+                  <button  type="submit" class="btn btn-success float-right">View Our Rooms!</button>
+                </form>                
             </div>
 
         </div>
@@ -28,7 +33,7 @@
 
     <div class="col-6 ">
       <h1>Leave a Review</h1>
-      <form action="/hotels/<%=hotel._id%>/reviews" method="POST">
+      <form action="/hotels/<%=hotel._id%>/reviews" method="POST" novalidate class="validated-form" >
         <div class="mb-3">
           <label style="font-size: larger;" for="rating">Rating</label>
           <input type="range"  class="form-range"  min="1" max="5" id="body" name="review[rating]">
@@ -38,7 +43,10 @@
               <label style="font-size: larger;" for="body" class="mb-3">Review</label>
 
           </div>
-          <textarea class="form-control mb-3" id="body" name="review[body]" cols="70" rows="3"></textarea>
+          <textarea required class="form-control mb-3" id="body" name="review[body]" cols="70" rows="3"></textarea>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
     
         </div>
 

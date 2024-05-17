@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate') %>
+
+<% if (rooms.length) { %>
+
+  <% for (let room of rooms) { %>
+
+    <div class="row">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= room.Number %>%></h5>
+          <p class="card-text"><%= room.price %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item text-muted"><%= room.pictures %></li>
+        </ul>
+      </div>
+    </div>
+  
+  <% } %>
+  
+<% } else { %>
+
+  <div class="alert alert-primary" role="alert">
+    A simple primary alert—check it out!
+  </div>
+
+<% } %>
