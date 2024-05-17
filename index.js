@@ -6,8 +6,8 @@ const methodOverride = require("method-override");
 const Hotel = require('./models/hotel')
 const Room = require("./models/room");
 const Review = require("./models/review");
-const WrapAsync=require('./utils/catchAsync');
-const ExpressError=require('./utils/ExpressError');
+const WrapAsync = require('./utils/catchAsync');
+const ExpressError = require('./utils/ExpressError');
 const ValidateHotelSchema = require("./utils/VlaidateMiddlewear"); //hotel schema validation Joi middleware 
 const validateReviewsScema = require("./utils/ValidateReview");    //review schema validation Joi middleware
 
@@ -42,29 +42,29 @@ app.get("/hotels/new", WrapAsync(async (req, res) => {
 }));
 
 app.get("/hotels/:id/rooms/new", WrapAsync(async (req, res) => {
-  const hotel= await Hotel.findById(req.params.id)
+  const hotel = await Hotel.findById(req.params.id)
   console.log(hotel)
-  res.render("Rooms/new",{hotel});
+  res.render("Rooms/new", { hotel });
 }));
 
 app.get("/hotels/:id/rooms/new", WrapAsync(async (req, res) => {
-  const hotel= await Hotel.findById(req.params.id)
+  const hotel = await Hotel.findById(req.params.id)
   console.log(hotel)
-  res.render("Rooms/new",{hotel});
+  res.render("Rooms/new", { hotel });
 }));
 
 
 app.post("/hotels/:id/rooms", WrapAsync(async (req, res) => {
-  const room =req.body.room
-  room.currentCounter=0
-  room.calender=[[]]
+  const room = req.body.room
+  room.currentCounter = 0
+  room.calender = [[]]
   console.log(room)
-  const Res= new Room(room)
+  const Res = new Room(room)
   const hotel = await Hotel.findById(req.params.id).populate("Rooms");
   hotel.Rooms.push(Res);
   await Res.save();
   await hotel.save();
-  res.redirect(`/hotels/${req.params.id}`);
+  res.redirect(`/hotels/${hotel.id}/rooms/new`);
 
 
 }));
@@ -75,7 +75,7 @@ app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
   const hotel = new Hotel(body);
   await hotel.save();
   console.log(`${hotel.name} Hotel saved`);
-  res.redirect(`/hotels/${hotel.id}/rooms/new`);
+  res.redirect(`/hotels/${hotel.id}`);
 
 }));
 
@@ -112,11 +112,20 @@ app.delete("/hotels/:id", WrapAsync(async (req, res) => {
 })
 );
 
+app.delete("/hotels/:id/rooms/:roomsId", WrapAsync(async (req, res) => {
+  const { id, roomsId } = req.params
+  await Hotel.findByIdAndUpdate(id, { $pull: { Rooms: roomsId } });
+  await Room.findByIdAndDelete(roomsId)
+  res.redirect(`/hotels/${id}`)
+})
+);
 
 
-app.post("/hotels/:id/reviews",validateReviewsScema,WrapAsync(async (req, res) => {
-  const review =new Review(req.body.review);
-  id=req.params.id;
+
+
+app.post("/hotels/:id/reviews", validateReviewsScema, WrapAsync(async (req, res) => {
+  const review = new Review(req.body.review);
+  id = req.params.id;
   const hotel = await Hotel.findById(id).populate("Reviews");
   hotel.Reviews.push(review)
   await review.save();
@@ -125,15 +134,15 @@ app.post("/hotels/:id/reviews",validateReviewsScema,WrapAsync(async (req, res) =
 }));
 
 
-app.get("/hotels/:id/rooms",WrapAsync(async (req, res) => {
+app.get("/hotels/:id/rooms", WrapAsync(async (req, res) => {
   const hotel = await Hotel.findById(req.params.id).populate("Rooms");
   const rooms = hotel.Rooms;
   res.render("Hotels/rooms", rooms);
 
 }));
 
-app.delete('/hotels/:id/reviews/:reviewId',WrapAsync(async (req, res,next) => {
-  const {id,reviewId}=req.params
+app.delete('/hotels/:id/reviews/:reviewId', WrapAsync(async (req, res, next) => {
+  const { id, reviewId } = req.params
   await Hotel.findByIdAndUpdate(id, { $pull: { Reviews: reviewId } });
   await Review.findByIdAndDelete(reviewId)
   res.redirect(`/hotels/${id}`)

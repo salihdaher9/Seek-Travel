@@ -1,4 +1,4 @@
-<% layout('layouts/boilerplate')%>
+<% layout('layouts/noContainerBoilerPlate')%>
  
 
   <div class="row">
@@ -34,16 +34,25 @@
       
         <% for (let room of hotel.Rooms) { %>
           <!-- About 5 - Bootstrap Brain Component -->
-          <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+          
+          <div class="col-4 mb-2">
+            <div class="card" >
+              <img src="https://i.pinimg.com/originals/42/26/e5/4226e525229848bce4ca09140999d56f.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= room.type %>%></h5>
+                <p class="card-text"><%= room.description%></p>
+                <a href="#" class="btn btn-primary">View Price</a>
+                <form class="d-inline" action="/hotels/<%= hotel._id %>/rooms/<%=room._id%>?_method=DELETE" method="POST">
+                  <button class="btn btn-danger float-right">Delete</button>
+              </form>
+              </div>
             </div>
           </div>
+          
 
         <% } %>
+        
+        <hr>
 
 
       </div>
@@ -80,6 +89,7 @@
           </div>
         </div>
       <% } %>
+      
     
     </div>
 </div>

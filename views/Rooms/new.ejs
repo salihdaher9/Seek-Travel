@@ -52,9 +52,21 @@
       </div>
       
   <div class="mb-3">
-    <button class="btn btn-success">Add Room</button>
+    <button class="btn btn-success" >Add Room</button>
+    <button class="btn btn-primary float-right" id="roomAdd">Return to Hotel</button>
+    
   </div>
       </form>
+      
       </div>
-   
+      
   </div>
+
+  <script>
+    const Addbtn = document.getElementById("roomAdd")
+Addbtn.addEventListener("click",(e)=>{
+  e.preventDefault()
+  console.log("clicked")
+  window.location.href="http://localhost:3000/hotels/<%=hotel._id%>"
+})
+  </script>
