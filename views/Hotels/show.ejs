@@ -20,12 +20,7 @@
                 <form class="d-inline" action="/hotels/<%= hotel._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
-                <form class="d-inline" action="/hotels/<%= hotel._id %>/rooms" method="POST">
-                  <button type="submit" class="btn btn-success float-r">Add more Types!</button>
-                </form>
-                <form class="d-inline" action="/hotels/<%=hotel._id %>/rooms" method="Get">
-                  <button  type="submit" class="btn btn-success float-right">View Our Rooms!</button>
-                </form>                
+                  <button type="submit" id="roomAdd" class="btn btn-success float-r">Add more Types!</button>
             </div>
             <div class="card-footer text-muted">
               2 days ago
@@ -34,7 +29,24 @@
         </div>
     </div>
 
-    <div class="col-6 ">
+    <div class="col-6">
+      <div class="row">
+      
+        <% for (let room of hotel.Rooms) { %>
+          <!-- About 5 - Bootstrap Brain Component -->
+          <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+
+        <% } %>
+
+
+      </div>
       <h1>Leave a Review</h1>
       <form action="/hotels/<%=hotel._id%>/reviews" method="POST" novalidate class="validated-form" >
         <div class="mb-3">
@@ -50,9 +62,7 @@
           <div class="valid-feedback">
             Looks good!
           </div>
-    
         </div>
-
         <button class="btn btn-success mb-3">Submit</button>
       </form>
       <hr>
@@ -73,5 +83,15 @@
     
     </div>
 </div>
+
+<script>
+const Addbtn = document.getElementById("roomAdd")
+Addbtn.addEventListener("click",(e)=>{
+  console.log("clicked")
+  window.location.href="http://localhost:3000/hotels/<%=hotel._id%>/rooms/new"
+})
+
+
+</script>
 
 

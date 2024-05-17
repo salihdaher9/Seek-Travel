@@ -47,6 +47,28 @@ app.get("/hotels/:id/rooms/new", WrapAsync(async (req, res) => {
   res.render("Rooms/new",{hotel});
 }));
 
+app.get("/hotels/:id/rooms/new", WrapAsync(async (req, res) => {
+  const hotel= await Hotel.findById(req.params.id)
+  console.log(hotel)
+  res.render("Rooms/new",{hotel});
+}));
+
+
+app.post("/hotels/:id/rooms", WrapAsync(async (req, res) => {
+  const room =req.body.room
+  room.currentCounter=0
+  room.calender=[[]]
+  console.log(room)
+  const Res= new Room(room)
+  const hotel = await Hotel.findById(req.params.id).populate("Rooms");
+  hotel.Rooms.push(Res);
+  await Res.save();
+  await hotel.save();
+  res.redirect(`/hotels/${req.params.id}`);
+
+
+}));
+
 app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
 
   const body = req.body.hotel;
@@ -58,10 +80,11 @@ app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
 }));
 
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {
-  const hotel = await Hotel.findById(req.params.id).populate("Reviews");
+  const hotel = await Hotel.findById(req.params.id).populate("Reviews").populate('Rooms');
   if (!hotel) {
     throw new Error("error getting hotel")
   }
+  console.log(hotel)
   res.render("Hotels/show", { hotel });
 
 }))
