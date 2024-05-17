@@ -41,13 +41,19 @@ app.get("/hotels/new", WrapAsync(async (req, res) => {
   res.render("Hotels/new");
 }));
 
+app.get("/hotels/:id/rooms/new", WrapAsync(async (req, res) => {
+  const hotel= await Hotel.findById(req.params.id)
+  console.log(hotel)
+  res.render("Rooms/new",{hotel});
+}));
+
 app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
 
   const body = req.body.hotel;
   const hotel = new Hotel(body);
   await hotel.save();
   console.log(`${hotel.name} Hotel saved`);
-  res.redirect(`/hotels/${hotel.id}`);
+  res.redirect(`/hotels/${hotel.id}/rooms/new`);
 
 }));
 
@@ -95,9 +101,17 @@ app.post("/hotels/:id/reviews",validateReviewsScema,WrapAsync(async (req, res) =
   res.redirect(`/hotels/${id}`);
 }));
 
+
+app.get("/hotels/:id/rooms",WrapAsync(async (req, res) => {
+  const hotel = await Hotel.findById(req.params.id).populate("Rooms");
+  const rooms = hotel.Rooms;
+  res.render("Hotels/rooms", rooms);
+
+}));
+
 app.delete('/hotels/:id/reviews/:reviewId',WrapAsync(async (req, res,next) => {
   const {id,reviewId}=req.params
-  await Hotel.findByIdAndUpdate(id, { $pull: { review: reviewId } });
+  await Hotel.findByIdAndUpdate(id, { $pull: { Reviews: reviewId } });
   await Review.findByIdAndDelete(reviewId)
   res.redirect(`/hotels/${id}`)
 

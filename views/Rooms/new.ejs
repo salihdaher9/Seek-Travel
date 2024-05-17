@@ -1,0 +1,37 @@
+<% layout('layouts/boilerplate')%>
+<h1><%= hotel.name  %> Hotel</h1>
+<div class="row">
+  
+    <h1 class="text-center"> Add a new Room</h1>
+    <div class="col-6 offset-3">
+    <form method="post" action="/hotels" novalidate class="validated-form"> 
+
+      <div class="mb-3">
+        <label class="form-label" for="name">Type Name</label>
+        <input class="form-control" type="text" name="hotel[name]" id="name" placeholder="enter name" required>
+        <div class="valid-feedback">
+          Looks good!
+      </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="descriptoin">descriptoin</label>
+        <input class="form-control" type="text" name="hotel[describtion]" id="describtion" placeholder="enter describtion" required>
+        <div class="valid-feedback">
+          Looks good!
+      </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="location">location</label>
+        <input class="form-control" type="text" name="hotel[location]" id="location" placeholder="enter location" required>
+        <div class="valid-feedback">
+          Looks good!
+      </div>
+      </div>
+      <div class="mb-3">
+      <button class="btn btn-success">Add hotel</button>
+    </div>
+      </form>
+      </div>
+   
+  </div>
