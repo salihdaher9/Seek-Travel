@@ -1,18 +1,20 @@
 <% layout('layouts/boilerplate')%>
   <h1>Hotels : <%= Object.keys(hotels).length %> properties found</h1>
-  <div>
-    <a href="http://localhost:3000/hotels/new">add hotel</a>
-  </div>
  
+
+ <hr>
    
     <% for (let hotel of hotels){%>
       <div class="card mb-3">
           <div class="row">
               <div class="col-md-4">
+                
                   <img class="img-fluid" alt="" src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+                  
               </div>
               <div class="col-md-8">
                   <div class="card-body">
+                    <span class="badge rounded-pill bg-primary float-right" style=" font-size: 20px;">9.0</span>
                       <h5 class="card-title"><%= hotel.name %> </h5>
                       <p class="card-text"><%= hotel.describtion %></p>
                       <p class="card-text">
@@ -20,6 +22,7 @@
                       </p>
                       <a class="btn btn-primary" href="http://localhost:3000/hotels/<%=hotel.id%>">View <%= hotel.name %></a>
                   </div>
+                  
               </div>
           </div>
       </div>
