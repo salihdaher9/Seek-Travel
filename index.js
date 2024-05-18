@@ -81,7 +81,7 @@ app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
 
 }));
 app.get("/hotels/cal", (req, res, next) => {
-    res.render("Hotels/calender/index");
+  res.render("Rooms/show");
 
 })
 
