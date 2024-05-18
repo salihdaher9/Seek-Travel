@@ -24,6 +24,8 @@ db.once("open", () => {
 });
 
 const app = express();
+app.use(express.static("public"));
+
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -78,6 +80,10 @@ app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
   res.redirect(`/hotels/${hotel.id}`);
 
 }));
+app.get("/hotels/cal", (req, res, next) => {
+    res.render("Hotels/calender/index");
+
+})
 
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {
   const hotel = await Hotel.findById(req.params.id).populate("Reviews").populate('Rooms');

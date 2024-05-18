@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    padding: 2rem;
+    height: 100vh;
+    font-family: Poppins, sans-serif;
+    background: linear-gradient(to bottom, #ff5e88, #ff9966);
+
+}
+
+h1 {
+    font-weight: 600;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+h3 {
+    font-weight: 600;
+}
+
+.calendar {
+    margin: auto;
+    width: 98%;
+    max-width: 380px;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: none; /* Initially hide the calendar */
+    transition: opacity 0.3s ease-in-out; /* Add transition for opacity */
+}
+
+.calendar.visible {
+    display: block; /* Show the calendar */
+    opacity: 1; /* Ensure the calendar is fully opaque when visible */
+}
+
+
+.calendar header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.calendar nav {
+    display: flex;
+    align-items: center;
+}
+
+.calendar ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.calendar ul li {
+    width: calc(100% / 7);
+    margin-top: 25px;
+    position: relative;
+    z-index: 2;
+}
+
+#prev,
+#next {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#prev::before,
+#next::before {
+    content: "";
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-style: solid;
+    border-width: 0.25em 0.25em 0 0;
+    border-color: #ccc;
+}
+
+#next::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+#prev::before {
+    transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+#prev:hover::before,
+#next:hover::before {
+    border-color: #000;
+}
+
+.days {
+    font-weight: 600;
+}
+
+.dates li.today {
+    color: #fff;
+}
+
+.dates li.today::before {
+    content: "";
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.dates li.inactive {
+    color: #ccc;
+}
+
+.button-item {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-item:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.button-item:active {
+    background-color: #003f7f;
+    color: white;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary"  >
+        <div class="container-fluid">
+            <a class="navbar-brand"  href="/"><b>Booking.com</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="http://localhost:3000/hotels">Home</a>
+                    <a class="nav-link" href="http://localhost:3000/hotels">Hotels</a>
+                    <a class="nav-link" href="http://localhost:3000/hotels/new">New Hotel</a>
+                </div>
+            </div>
+            
+        </div>
+    </nav>
+</div>
+
+    <h1>Calendar</h1>
+    <button id="toggle-calendar">Toggle Calendar</button>
+
+    <div class="calendar">
+        <header>
+            <h3></h3>
+            <nav>
+                <button id="prev"></button>
+                <button id="next"></button>
+            </nav>
+        </header>
+        <section>
+            <ul class="days">
+                <li>Sun</li>
+                <li>Mon</li>
+                <li>Tue</li>
+                <li>Wed</li>
+                <li>Thu</li>
+                <li>Fri</li>
+                <li>Sat</li>
+            </ul>
+            <ul class="dates"></ul>
+        </section>
+
+</body>
+
+<script>
+
+
+
+
+const header = document.querySelector(".calendar h3");
+const dates = document.querySelector(".dates");
+const navs = document.querySelectorAll("#prev, #next");
+
+const months = [
+"January",
+"February",
+"March",
+"April",
+"May",
+"June",
+"July",
+"August",
+"September",
+"October",
+"November",
+"December",
+];
+
+let date = new Date();
+let month = date.getMonth();
+let year = date.getFullYear();
+
+function renderCalendar() {
+const start = new Date(year, month, 1).getDay();
+const endDate = new Date(year, month + 1, 0).getDate();
+const end = new Date(year, month, endDate).getDay();
+const endDatePrev = new Date(year, month, 0).getDate();
+
+let datesHtml = "";
+
+for (let i = start; i > 0; i--) {
+datesHtml += `<li class="inactive">${endDatePrev - i + 1}</li>`;
+}
+
+for (let i = 1; i <= endDate; i++) {
+let className =
+  i === date.getDate() &&
+  month === new Date().getMonth() &&
+  year === new Date().getFullYear()
+    ? ' class="today"'
+    : ' class="button-item" data-action="action1"';
+datesHtml += `<li${className}>${i}</li>`;
+}
+
+for (let i = end; i < 6; i++) {
+datesHtml += `<li class="inactive">${i - end + 1}</li>`;
+}
+
+dates.innerHTML = datesHtml;
+header.textContent = `${months[month]} ${year}`;
+
+// Re-attach click event listeners to new button items
+const buttonItems = document.querySelectorAll(".button-item");
+
+buttonItems.forEach((item) => {
+item.addEventListener("click", function () {
+  const action = this.getAttribute("data-action");
+  handleButtonClick(action);
+});
+});
+}
+
+function handleButtonClick(action) {
+switch (action) {
+case "action1":
+  alert("Button 1 clicked!");
+  break;
+default:
+  console.log("Unknown action:", action);
+}
+}
+
+navs.forEach((nav) => {
+nav.addEventListener("click", (e) => {
+const btnId = e.target.id;
+
+if (btnId === "prev" && month === 0) {
+  year--;
+  month = 11;
+} else if (btnId === "next" && month === 11) {
+  year++;
+  month = 0;
+} else {
+  month = btnId === "next" ? month + 1 : month - 1;
+}
+
+renderCalendar();
+});
+});document.addEventListener("DOMContentLoaded", function () {
+const toggleButton = document.getElementById("toggle-calendar");
+const calendar = document.querySelector(".calendar");
+const header = calendar.querySelector("h3");
+const dates = calendar.querySelector(".dates");
+const navs = calendar.querySelectorAll("#prev, #next");
+
+const months = [
+"January",
+"February",
+"March",
+"April",
+"May",
+"June",
+"July",
+"August",
+"September",
+"October",
+"November",
+"December",
+];
+
+let date = new Date();
+let month = date.getMonth();
+let year = date.getFullYear();
+
+function renderCalendar() {
+// Calendar rendering logic...
+}
+
+function handleButtonClick(action) {
+// Button click handling logic...
+}
+
+navs.forEach((nav) => {
+nav.addEventListener("click", (e) => {
+  // Navigation click handling logic...
+});
+});
+
+toggleButton.addEventListener("click", function () {
+calendar.classList.toggle("visible");
+if (calendar.classList.contains("visible")) {
+  calendar.style.opacity = "1";
+} else {
+  calendar.style.opacity = "0";
+}
+});
+
+renderCalendar();
+});
+
+
+
+document.addEventListener("DOMContentLoaded", renderCalendar);
+
+</script>
+</html>
