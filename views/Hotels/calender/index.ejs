@@ -14,15 +14,12 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-
 }
 
 body {
     padding: 2rem;
     height: 100vh;
     font-family: Poppins, sans-serif;
-    background: linear-gradient(to bottom, #ff5e88, #ff9966);
-
 }
 
 h1 {
@@ -175,8 +172,7 @@ h3 {
             
         </div>
     </nav>
-</div>
-
+  
     <h1>Calendar</h1>
     <button id="toggle-calendar">Toggle Calendar</button>
 
@@ -202,8 +198,8 @@ h3 {
         </section>
 
 </body>
-
-<script>
+    </div>
+    <script class="d-flex flex-column vh-100">
 
 
 
@@ -213,18 +209,18 @@ const dates = document.querySelector(".dates");
 const navs = document.querySelectorAll("#prev, #next");
 
 const months = [
-"January",
-"February",
-"March",
-"April",
-"May",
-"June",
-"July",
-"August",
-"September",
-"October",
-"November",
-"December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 let date = new Date();
@@ -232,126 +228,126 @@ let month = date.getMonth();
 let year = date.getFullYear();
 
 function renderCalendar() {
-const start = new Date(year, month, 1).getDay();
-const endDate = new Date(year, month + 1, 0).getDate();
-const end = new Date(year, month, endDate).getDay();
-const endDatePrev = new Date(year, month, 0).getDate();
+  const start = new Date(year, month, 1).getDay();
+  const endDate = new Date(year, month + 1, 0).getDate();
+  const end = new Date(year, month, endDate).getDay();
+  const endDatePrev = new Date(year, month, 0).getDate();
 
-let datesHtml = "";
+  let datesHtml = "";
 
-for (let i = start; i > 0; i--) {
-datesHtml += `<li class="inactive">${endDatePrev - i + 1}</li>`;
-}
+  for (let i = start; i > 0; i--) {
+    datesHtml += `<li class="inactive">${endDatePrev - i + 1}</li>`;
+  }
 
-for (let i = 1; i <= endDate; i++) {
-let className =
-  i === date.getDate() &&
-  month === new Date().getMonth() &&
-  year === new Date().getFullYear()
-    ? ' class="today"'
-    : ' class="button-item" data-action="action1"';
-datesHtml += `<li${className}>${i}</li>`;
-}
+  for (let i = 1; i <= endDate; i++) {
+    let className =
+      i === date.getDate() &&
+      month === new Date().getMonth() &&
+      year === new Date().getFullYear()
+        ? ' class="today"'
+        : ' class="button-item" data-action="action1"';
+    datesHtml += `<li${className}>${i}</li>`;
+  }
 
-for (let i = end; i < 6; i++) {
-datesHtml += `<li class="inactive">${i - end + 1}</li>`;
-}
+  for (let i = end; i < 6; i++) {
+    datesHtml += `<li class="inactive">${i - end + 1}</li>`;
+  }
 
-dates.innerHTML = datesHtml;
-header.textContent = `${months[month]} ${year}`;
+  dates.innerHTML = datesHtml;
+  header.textContent = `${months[month]} ${year}`;
 
-// Re-attach click event listeners to new button items
-const buttonItems = document.querySelectorAll(".button-item");
+  // Re-attach click event listeners to new button items
+  const buttonItems = document.querySelectorAll(".button-item");
 
-buttonItems.forEach((item) => {
-item.addEventListener("click", function () {
-  const action = this.getAttribute("data-action");
-  handleButtonClick(action);
-});
-});
+  buttonItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      const action = this.getAttribute("data-action");
+      handleButtonClick(action);
+    });
+  });
 }
 
 function handleButtonClick(action) {
-switch (action) {
-case "action1":
-  alert("Button 1 clicked!");
-  break;
-default:
-  console.log("Unknown action:", action);
-}
+  switch (action) {
+    case "action1":
+      alert("Button 1 clicked!");
+      break;
+    default:
+      console.log("Unknown action:", action);
+  }
 }
 
 navs.forEach((nav) => {
-nav.addEventListener("click", (e) => {
-const btnId = e.target.id;
+  nav.addEventListener("click", (e) => {
+    const btnId = e.target.id;
 
-if (btnId === "prev" && month === 0) {
-  year--;
-  month = 11;
-} else if (btnId === "next" && month === 11) {
-  year++;
-  month = 0;
-} else {
-  month = btnId === "next" ? month + 1 : month - 1;
-}
+    if (btnId === "prev" && month === 0) {
+      year--;
+      month = 11;
+    } else if (btnId === "next" && month === 11) {
+      year++;
+      month = 0;
+    } else {
+      month = btnId === "next" ? month + 1 : month - 1;
+    }
 
-renderCalendar();
-});
+    renderCalendar();
+  });
 });document.addEventListener("DOMContentLoaded", function () {
-const toggleButton = document.getElementById("toggle-calendar");
-const calendar = document.querySelector(".calendar");
-const header = calendar.querySelector("h3");
-const dates = calendar.querySelector(".dates");
-const navs = calendar.querySelectorAll("#prev, #next");
+  const toggleButton = document.getElementById("toggle-calendar");
+  const calendar = document.querySelector(".calendar");
+  const header = calendar.querySelector("h3");
+  const dates = calendar.querySelector(".dates");
+  const navs = calendar.querySelectorAll("#prev, #next");
 
-const months = [
-"January",
-"February",
-"March",
-"April",
-"May",
-"June",
-"July",
-"August",
-"September",
-"October",
-"November",
-"December",
-];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
-let date = new Date();
-let month = date.getMonth();
-let year = date.getFullYear();
+  let date = new Date();
+  let month = date.getMonth();
+  let year = date.getFullYear();
 
-function renderCalendar() {
-// Calendar rendering logic...
-}
+  function renderCalendar() {
+    // Calendar rendering logic...
+  }
 
-function handleButtonClick(action) {
-// Button click handling logic...
-}
+  function handleButtonClick(action) {
+    // Button click handling logic...
+  }
 
-navs.forEach((nav) => {
-nav.addEventListener("click", (e) => {
-  // Navigation click handling logic...
-});
-});
+  navs.forEach((nav) => {
+    nav.addEventListener("click", (e) => {
+      // Navigation click handling logic...
+    });
+  });
 
-toggleButton.addEventListener("click", function () {
-calendar.classList.toggle("visible");
-if (calendar.classList.contains("visible")) {
-  calendar.style.opacity = "1";
-} else {
-  calendar.style.opacity = "0";
-}
-});
+  toggleButton.addEventListener("click", function () {
+    calendar.classList.toggle("visible");
+    if (calendar.classList.contains("visible")) {
+      calendar.style.opacity = "1";
+    } else {
+      calendar.style.opacity = "0";
+    }
+  });
 
-renderCalendar();
+  renderCalendar();
 });
 
 
 
 document.addEventListener("DOMContentLoaded", renderCalendar);
 
-</script>
+    </script>
 </html>

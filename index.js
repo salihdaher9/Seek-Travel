@@ -80,10 +80,13 @@ app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
   res.redirect(`/hotels/${hotel.id}`);
 
 }));
-app.get("/hotels/cal", (req, res, next) => {
-  res.render("Rooms/show");
+app.get("/hotels/:id/rooms/:RoomId",WrapAsync(async (req, res, next) => {
+  console.log(req.params)
+  const hotel = await Hotel.findById(req.params.id);
+  const room=await Room.findById(req.params.RoomId);
+  res.render("Rooms/show", { hotel,room });
 
-})
+}))
 
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {
   const hotel = await Hotel.findById(req.params.id).populate("Reviews").populate('Rooms');
