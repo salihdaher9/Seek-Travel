@@ -4,29 +4,40 @@
   <div class="row">
     <div class="col-6 ">
         <div class="card mb-3">
-            <img src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+            <img src="https://media.cnn.com/api/v1/images/stellar/prod/160726150143-us-beautiful-hotels-17-bellagio-2.jpg?q=w_1900,h_1096,x_0,y_0,c_fill" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"><%= hotel.name %>%></h5>
                 <p class="card-text"><%= hotel.describtion%></p>
             </div>
             <ul class="list-group list-group-flush"> 
-                <li class="list-group-item text-muted"><%= hotel.location%></li>
+                <li class="list-group-item text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                  <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                  <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                </svg> <%= hotel.location%></li>
 
             </ul>
             <div class="card-body">
               
-                <a class="card-link btn btn-info" href="http://localhost:3000/hotels/<%= hotel._id %>/edit">Edit</a>
+                <a class="card-link btn btn-info" href="http://localhost:3000/hotels/<%= hotel._id %>/edit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>&nbsp <b>Edit Hotel</b></a>
 
                 <form class="d-inline" action="/hotels/<%= hotel._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                    </svg>&nbsp <b>Delete Hotel</b></button>
                 </form>
-                  <button type="submit" id="roomAdd" class="btn btn-success float-r">Add more Types!</button>
+                  <button type="submit" id="roomAdd" class="btn btn-success float-r"><b>Add more Types!</b></button>
             </div>
             <div class="card-footer text-muted">
               2 days ago
           </div>
+         
 
         </div>
+      
+      
     </div>
 
     <div class="col-6">
@@ -36,14 +47,16 @@
           <!-- About 5 - Bootstrap Brain Component -->
           
           <div class="col-4 mb-2">
-            <div class="card" >
-              <img src="https://i.pinimg.com/originals/42/26/e5/4226e525229848bce4ca09140999d56f.jpg" class="card-img-top" alt="...">
+            <div class="card mt-3" >
+              <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/367495264.jpg?k=41393a0d5ff850c0af17143a424f5eab8d0ee9a3b7db3f6152a0472226095af3&o=&hp=1" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title"><%= room.type %>%></h5>
-                <p class="card-text"><%= room.description%></p>
-                <a href="#" class="btn btn-primary">View Price</a>
+                <h5 class="card-title"><b><%= room.type %></b></h5>
+                <p class="card-text">Price for a night: <b><%= room.price%>$</b></p>
+                <a href="#" class="btn btn-primary"><b>See availability</b></a>
                 <form class="d-inline" action="/hotels/<%= hotel._id %>/rooms/<%=room._id%>?_method=DELETE" method="POST">
-                  <button class="btn btn-danger float-right">Delete</button>
+                  <button class="btn btn-danger float-right"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                  </svg></button>
               </form>
               </div>
             </div>
@@ -56,15 +69,16 @@
 
 
       </div>
-      <h1>Leave a Review</h1>
+      <h1><b>Leave a Review</b></h1>
+      <br>
       <form action="/hotels/<%=hotel._id%>/reviews" method="POST" novalidate class="validated-form" >
         <div class="mb-3">
-          <label style="font-size: larger;" for="rating">Rating</label>
+          <label style="font-size: larger;" for="rating"><b>Rating :</b></label>
           <input type="range"  class="form-range"  min="1" max="5" id="body" name="review[rating]">
         </div>
         <div>
           <div>
-              <label style="font-size: larger;" for="body" class="mb-3">Review</label>
+              <label style="font-size: larger;" for="body" class="mb-3"><b>Review :</b></label>
 
           </div>
           <textarea required class="form-control mb-3" id="body" name="review[body]" cols="70" rows="3"></textarea>
@@ -72,18 +86,22 @@
             Looks good!
           </div>
         </div>
-        <button class="btn btn-success mb-3">Submit</button>
+        <button class="btn btn-success mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+          <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+        </svg>&nbsp  <b>Submit</b></button>
       </form>
       <hr>
       <br>
       <% for(let rev of hotel.Reviews){%>      
         <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">Rating: <%= rev.rating %> / 5</h5>
-            <p class="card-text">Review: <%= rev.body %> </p>
+            <h5 class="card-title"><b>Rating: <%= rev.rating %> / 5</b></h5>
+            <p class="card-text"><b>Review:</b> <%= rev.body %> </p>
             <form action="/hotels/<%=hotel._id%>/reviews/<%=rev._id%>?_method=DELETE" method="POST"  >
                <button 
-                class="btn btn-danger float-left">Delete</button>
+                class="btn btn-danger float-left"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                  <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                </svg></button>
             </form>
 
           </div>
