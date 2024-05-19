@@ -1,4 +1,4 @@
-<% layout('layouts/boilerplate')%>
+<% layout('layouts/noContainerBoilerPlate')%>
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
@@ -13,7 +13,6 @@ body {
 
 height: 100vh;
 font-family: Poppins, sans-serif;
-background: linear-gradient(to bottom, #ff5e88, #ff9966);
 
 }
 
@@ -38,12 +37,10 @@ border-radius: 10px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 display: none; /* Initially hide the calendar */
 transition: opacity 0.3s ease-in-out; /* Add transition for opacity */
+display: block; /* Show the calendar */
+
 }
 
-.calendar.visible {
-display: block; /* Show the calendar */
-opacity: 1; /* Ensure the calendar is fully opaque when visible */
-}
 
 
 .calendar header {
@@ -54,7 +51,6 @@ justify-content: space-between;
 
 .calendar nav {
 display: flex;
-align-items: center;
 }
 
 .calendar ul {
@@ -149,15 +145,30 @@ color: white;
 
 </style>
 <div class="row">
-    <div class="col-6">
+    <div class="col-4">
+      <div class="card mb-3">
+        <img src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title"><%= room.type %>%></h5>
+            <p class="card-text"><%= room.description%></p>
+        </div>
+        <ul class="list-group list-group-flush"> 
+          <li class="list-group-item text-muted"><%= hotel.location%></li>
+
+        </ul>
+        <li class="list-group-item">Price: <%= room.price%>$ a night</li>
+
+        <div class="card-footer text-muted">
+          2 days ago
+      </div>
 
     </div>
-    <h1>Calendar</h1>
-    <button id="toggle-calendar">Toggle Calendar</button>
-
-    <div class="calendar">
+    </div>
+<div class="col-4">
+      <h1 style="color: #000;">Calendar</h1>
+      <div class="calendar">
         <header>
-            <h3></h3>
+            <h3 id="cuurentMonth"></h3>
             <nav>
                 <button id="prev"></button>
                 <button id="next"></button>
@@ -177,11 +188,14 @@ color: white;
         </section>
 
 </div>
+</div>
+<div class="col-4">
+  
+
+</div>
+</div>
+    
 <script>
-
-
-
-
     const header = document.querySelector(".calendar h3");
     const dates = document.querySelector(".dates");
     const navs = document.querySelectorAll("#prev, #next");
@@ -268,61 +282,14 @@ color: white;
     } else {
       month = btnId === "next" ? month + 1 : month - 1;
     }
-    
+    W
     renderCalendar();
     });
     });
-    document.addEventListener("DOMContentLoaded", function () {
-    const toggleButton = document.getElementById("toggle-calendar");
-    const calendar = document.querySelector(".calendar");
-    
-    const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-    ];
-    
-    let date = new Date();
-    let month = date.getMonth();
-    let year = date.getFullYear();
-    
-    function renderCalendar() {
-    // Calendar rendering logic...
-    }
-    
-    function handleButtonClick(action) {
-    // Button click handling logic...
-    }
-    
-    navs.forEach((nav) => {
-    nav.addEventListener("click", (e) => {
-      // Navigation click handling logic...
-    });
-    });
-    
-    toggleButton.addEventListener("click", function () {
-    calendar.classList.toggle("visible");
-    if (calendar.classList.contains("visible")) {
-      calendar.style.opacity = "1";
-    } else {
-      calendar.style.opacity = "0";
-    }
-    });
-    
-    });
-        renderCalendar();
-
-    
+   
     
     document.addEventListener("DOMContentLoaded", renderCalendar);
+    const mymonth = document.getElementById("cuurentMonth")
+
     
     </script>
