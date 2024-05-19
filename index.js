@@ -10,6 +10,7 @@ const WrapAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const ValidateHotelSchema = require("./utils/VlaidateMiddlewear"); //hotel schema validation Joi middleware 
 const validateReviewsScema = require("./utils/ValidateReview");    //review schema validation Joi middleware
+const validateRoomsScema = require("./utils/ValidateRoom");    //review schema validation Joi middleware
 
 mongoose.connect("mongodb://0.0.0.0:27017/Hotels_project", {
   useNewUrlParser: true,
@@ -56,7 +57,7 @@ app.get("/hotels/:id/rooms/new", WrapAsync(async (req, res) => {
 }));
 
 
-app.post("/hotels/:id/rooms", WrapAsync(async (req, res) => {
+app.post("/hotels/:id/rooms",validateRoomsScema, WrapAsync(async (req, res) => {
   const room = req.body.room
   room.currentCounter = 0
   room.calender = [[]]
@@ -67,8 +68,6 @@ app.post("/hotels/:id/rooms", WrapAsync(async (req, res) => {
   await Res.save();
   await hotel.save();
   res.redirect(`/hotels/${hotel.id}/rooms/new`);
-
-
 }));
 
 app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
