@@ -11,8 +11,8 @@ const RoomSchema = new Schema({
   currentCounter: { type: Number, required: true},
   calender:[{
     Date: { type: Date},
-    empty: { type: Boolean}
-  }]
+    Number:{type: Number}
+    }]
 });
 
 module.exports = mongoose.model("Room", RoomSchema);
