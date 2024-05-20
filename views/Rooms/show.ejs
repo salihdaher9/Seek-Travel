@@ -1,4 +1,4 @@
-<% layout('layouts/noContainerBoilerPlate')%>
+<% layout('layouts/boilerplate')%>
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
@@ -143,8 +143,9 @@ background-color: #003f7f;
 color: white;
 }
 
+
 </style>
-<div class="row">
+<div style="color: #000;" class="row">
     <div class="col-4">
       <div class="card mb-3">
         <img src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
@@ -164,8 +165,8 @@ color: white;
 
     </div>
     </div>
-<div class="col-4">
-      <h1 style="color: #000;">Calendar</h1>
+<div style="color: #000;" class="col-4">
+      <h1 style="color: #000000;">Calendar</h1>
       <div class="calendar">
         <header>
             <h3 id="cuurentMonth"></h3>
@@ -176,12 +177,12 @@ color: white;
         </header>
         <section>
             <ul class="days">
-                <li>Sun</li>
-                <li>Mon</li>
-                <li>Tue</li>
-                <li>Wed</li>
-                <li>Thu</li>
-                <li>Fri</li>
+                <li >Sun</li>
+                <li >Mon</li>
+                <li >Tue</li>
+                <li >Wed</li>
+                <li >Thu</li>
+                <li >Fri</li>
                 <li>Sat</li>
             </ul>
             <ul class="dates"></ul>
@@ -189,13 +190,28 @@ color: white;
 
 </div>
 </div>
-<div class="col-4">
-  
+<div style="color: #000;" class="col-4 mt-5">
+  <div class="card mt-5" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Check In Date </h5>
+      <p class="card-text" id="checkInDate"></p>
+    </div>
+  </div>
+  <div class="card mt-5" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title ">Check Out Date </h5>
+      <p class= "card-text" id="checkOutDate"></p>
+    </div>
+  </div>
+
+  <button onclick="Resetfunc()" type="button" class="btn btn-primary mt-5">Reset</button>
+
 
 </div>
 </div>
     
 <script>
+
     const header = document.querySelector(".calendar h3");
     const dates = document.querySelector(".dates");
     const navs = document.querySelectorAll("#prev, #next");
@@ -237,7 +253,7 @@ color: white;
       month === new Date().getMonth() &&
       year === new Date().getFullYear()
         ? ' class="today"'
-        : ' class="button-item" data-action="action1"';
+        : ` class="button-item" id="my${i}"  data-action="${i}"`;
     datesHtml += `<li${className}>${i}</li>`;
     }
     
@@ -258,15 +274,71 @@ color: white;
     });
     });
     }
-    
+    let arr=[]
+
     function handleButtonClick(action) {
-    switch (action) {
-    case "action1":
-      alert("Button 1 clicked!");
-      break;
-    default:
-      console.log("Unknown action:", action);
+      const dateDay=action
+
+      if (arr.length<1){
+        const btn=document.getElementById(`my${action}`)
+        btn.style.backgroundColor="#0056b3"
+        btn.style.color="white"
+
+        arr.push(action)
+      }
+      else{
+
+        for (let i=parseInt(arr[0]);i<parseInt(action)+1;i++){
+          const btn=document.getElementById(`my${i}`)
+          btn.style.backgroundColor="#0056b3"
+          btn.style.color="white"
+          arr.push(i)
+
+        }
+      }
+      const mymonth = document.getElementById("cuurentMonth")
+      const checkInDate = document.getElementById("checkInDate")
+      const checkOutDate = document.getElementById("checkOutDate")
+      Datee=dateDay + " " + mymonth.textContent
+      if (checkInDate.textContent=="") {
+      checkInDate.textContent=(Datee)
+
+        }
+      else{
+        checkOutDate.textContent=(Datee)
+
+      }
+      console.log(arr)
     }
+    
+    function Resetfunc(){
+      arr=[]
+      const checkInDate = document.getElementById("checkInDate")
+      const checkOutDate = document.getElementById("checkOutDate")
+      checkInDate.textContent=""
+      checkOutDate.textContent=""
+      
+      for (let i=0;i<30;i++){
+          const btn=document.getElementById(`my${i}`)
+          if (btn !== null) {
+            const computedStyle = window.getComputedStyle(btn);
+            const backgroundColor = computedStyle.backgroundColor;
+            if(backgroundColor=='rgb(0, 86, 179)'){
+              btn.style.backgroundColor = 'white';
+              btn.style.color = 'black';
+
+            }
+
+    // btn exists
+        } else {
+          // btn does not exist
+           console.log("btn does not exist.");
+}
+
+
+        }
+      
+
     }
     
     navs.forEach((nav) => {
@@ -282,14 +354,14 @@ color: white;
     } else {
       month = btnId === "next" ? month + 1 : month - 1;
     }
-    W
+    
     renderCalendar();
     });
     });
    
     
     document.addEventListener("DOMContentLoaded", renderCalendar);
-    const mymonth = document.getElementById("cuurentMonth")
+    
 
     
     </script>
