@@ -91,10 +91,10 @@ app.get("/hotels/:id/rooms/:RoomId", WrapAsync(async (req, res, next) => {
 app.post("/hotels/:id/rooms/:roomId/calender",WrapAsync(async (req, res, next) => {
     const inn = req.body.body.in;
     const out = req.body.body.out;
-    const Hotelid = req.params.id;
     const Roomid = req.params.roomId;
     const id = req.params.id;
     const room = await Room.findById(Roomid);
+    const hotel=await Hotel.findById(id);
     const checkInDate = new Date(inn);
     const checkOutDate = new Date(out);
     const dates = [];
@@ -147,7 +147,24 @@ app.post("/hotels/:id/rooms/:roomId/calender",WrapAsync(async (req, res, next) =
     }
 
     await room.save();
-    res.send("Hii");
+    const deff = function daysBetween(date1,date2 ) {
+      // Create Date objects
+      const startDate = new Date(date1);
+      const endDate = new Date(date2);
+
+      // Set time components to midnight
+      startDate.setHours(0, 0, 0, 0);
+      endDate.setHours(0, 0, 0, 0);
+
+      // Calculate the difference in milliseconds
+      const differenceMs = endDate - startDate;
+
+      // Convert back to days and return
+      return differenceMs / (1000 * 60 * 60 * 24);
+    };
+    mydif=deff(inn,out)
+    console.log(mydif);
+    res.render("Rooms/checkOut", { room, hotel, inn, out, mydif });
   })
 );
 
