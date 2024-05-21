@@ -57,7 +57,7 @@ app.get("/hotels/:id/rooms/new", WrapAsync(async (req, res) => {
 }));
 
 
-app.post("/hotels/:id/rooms",validateRoomScema, WrapAsync(async (req, res) => {
+app.post("/hotels/:id/rooms", validateRoomScema, WrapAsync(async (req, res) => {
   const room = req.body.room
   room.currentCounter = 0
   room.calender = [[]]
@@ -80,18 +80,17 @@ app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
   res.redirect(`/hotels/${hotel.id}`);
 
 }));
-app.get("/hotels/:id/rooms/:RoomId",WrapAsync(async (req, res, next) => {
+app.get("/hotels/:id/rooms/:RoomId", WrapAsync(async (req, res, next) => {
   console.log(req.params)
   const hotel = await Hotel.findById(req.params.id);
-  const room=await Room.findById(req.params.RoomId);
-  res.render("Rooms/show", { hotel,room });
+  const room = await Room.findById(req.params.RoomId);
+  res.render("Rooms/show", { hotel, room });
 
 }))
-app.post("/hotels/:id/rooms/:roomId/calender",WrapAsync((req, res,next) => {
-  console.log(req.body)
-  res.send("hello")
-  
-}))
+
+
+
+
 
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {
   const hotel = await Hotel.findById(req.params.id).populate("Reviews").populate('Rooms');
