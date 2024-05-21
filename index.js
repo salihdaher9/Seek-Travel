@@ -70,6 +70,7 @@ app.post("/hotels/:id/rooms",validateRoomScema, WrapAsync(async (req, res) => {
   res.redirect(`/hotels/${hotel.id}/rooms/new`);
 }));
 
+
 app.post("/hotels", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
 
   const body = req.body.hotel;
@@ -85,6 +86,11 @@ app.get("/hotels/:id/rooms/:RoomId",WrapAsync(async (req, res, next) => {
   const room=await Room.findById(req.params.RoomId);
   res.render("Rooms/show", { hotel,room });
 
+}))
+app.post("/hotels/:id/rooms/:roomId/calender",WrapAsync((req, res,next) => {
+  console.log(req.body)
+  res.send("hello")
+  
 }))
 
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {

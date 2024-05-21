@@ -205,6 +205,18 @@ color: white;
   </div>
 
   <button onclick="Resetfunc()" type="button" class="btn btn-primary mt-5">Reset</button>
+  <form action="/hotels/<%= hotel._id%>/rooms/<%= room._id%>/calender" method="POST">
+    <input style="display: none;" type="text" id="in" name="body[in]">
+    <input  style="display: none;" type="text" id="out" name="body[out]">
+
+    <button type="submit" class="btn btn-success mt-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+      <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+
+    </svg>&nbsp <b>Confirm</b></button>
+
+  </form>
+  
 
 
 </div>
@@ -278,11 +290,17 @@ color: white;
 
     function handleButtonClick(action) {
       const dateDay=action
+      const inn =document.getElementById("in")
+      const out=document.getElementById("out")
+      const mymonth = document.getElementById("cuurentMonth")
+      const checkInDate = document.getElementById("checkInDate")
+      const checkOutDate = document.getElementById("checkOutDate")
 
       if (arr.length<1){
         const btn=document.getElementById(`my${action}`)
         btn.style.backgroundColor="#0056b3"
         btn.style.color="white"
+        inn.value=dateDay + " " + mymonth.textContent
 
         arr.push(action)
       }
@@ -293,12 +311,11 @@ color: white;
           btn.style.backgroundColor="#0056b3"
           btn.style.color="white"
           arr.push(i)
+          out.value=dateDay + " " + mymonth.textContent
 
         }
       }
-      const mymonth = document.getElementById("cuurentMonth")
-      const checkInDate = document.getElementById("checkInDate")
-      const checkOutDate = document.getElementById("checkOutDate")
+   
       Datee=dateDay + " " + mymonth.textContent
       if (checkInDate.textContent=="") {
       checkInDate.textContent=(Datee)
@@ -318,7 +335,7 @@ color: white;
       checkInDate.textContent=""
       checkOutDate.textContent=""
       
-      for (let i=0;i<30;i++){
+      for (let i=0;i<32;i++){
           const btn=document.getElementById(`my${i}`)
           if (btn !== null) {
             const computedStyle = window.getComputedStyle(btn);
