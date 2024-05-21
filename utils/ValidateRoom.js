@@ -2,20 +2,18 @@ const Joi = require("joi");
 const ExpressError = require("./ExpressError");
 
 const validateRoomScema = (req, res, next) => {
-   req.body.room.max =10;
-   req.body.room.currentCounter = 0;
-   req.body.room.calender = [];
+   req.body.room.Reservations = [];
+   req.body.room.DateCounter = [];
 
   const RoomScema = Joi.object({
-
     room: Joi.object({
       type: Joi.string().required(),
       description: Joi.string().required(),
       price: Joi.number().required(),
       pictures: Joi.string().required(),
       max: Joi.number().required(),
-      currentCounter: Joi.number().required(),
-      calender: Joi.array().required(),
+      Reservations: Joi.array().required(),
+      DateCounter: Joi.array().required(),
     }).required(),
   });
   const result = RoomScema.validate(req.body);

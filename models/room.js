@@ -6,13 +6,16 @@ const RoomSchema = new Schema({
   type: { type: String, required: true },
   description: { type: String,  required: true },
   price: { type: Number, required: true },
-  pictures: [{ type: String, required: true }],
+  pictures: { type: String, required: true },
   max: { type: Number},
-  currentCounter: { type: Number, required: true},
-  calender:[{
-    Date: { type: Date},
-    Number:{type: Number}
-    }]
+  Reservations:[{
+    id:{type: String},
+    Date: [{ type: Date}],
+    }],
+  DateCounter:[{
+    Date:{type: Date},
+    DateNumber:{type: Number}
+  }]
 });
 
 module.exports = mongoose.model("Room", RoomSchema);

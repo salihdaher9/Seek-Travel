@@ -11,6 +11,7 @@ const ExpressError = require('./utils/ExpressError');
 const ValidateHotelSchema = require("./utils/VlaidateMiddlewear"); //hotel schema validation Joi middleware 
 const validateReviewsScema = require("./utils/ValidateReview");    //review schema validation Joi middleware
 const validateRoomScema = require("./utils/ValidateRoom");    //review schema validation Joi middleware
+const { parse, add, format } = require("date-fns");
 
 mongoose.connect("mongodb://0.0.0.0:27017/Hotels_project", {
   useNewUrlParser: true,
@@ -87,11 +88,69 @@ app.get("/hotels/:id/rooms/:RoomId",WrapAsync(async (req, res, next) => {
   res.render("Rooms/show", { hotel,room });
 
 }))
-app.post("/hotels/:id/rooms/:roomId/calender",WrapAsync((req, res,next) => {
-  console.log(req.body)
-  res.send("hello")
-  
-}))
+app.post("/hotels/:id/rooms/:roomId/calender",WrapAsync(async (req, res, next) => {
+    const inn = req.body.body.in;
+    const out = req.body.body.out;
+    const Hotelid = req.params.id;
+    const Roomid = req.params.roomId;
+    const id = req.params.id;
+    const room = await Room.findById(Roomid);
+    const checkInDate = new Date(inn);
+    const checkOutDate = new Date(out);
+    const dates = [];
+    for (let datee = add(checkInDate, { days: 1 });datee <= add(checkOutDate, { days: 1 });datee = add(datee, { days: 1 })) {
+      dates.push(new Date(datee));
+    }
+    console.log(dates);
+    room.Reservations.push({
+      id: "Name",
+      Date: [add(checkInDate, { days: 1 }), add(checkOutDate, { days : 1 })]
+    });  
+    // Iterate over the dates
+    for (let date of dates) {
+      if (room.DateCounter.length !== 0) {
+        // DateCounter is not empty
+        let dateFound = false;
+        for (let counter of room.DateCounter) {
+          // Check if the date already exists
+          if (counter.Date.getTime() === date.getTime()) {
+            if(counter.DateNumber==room.max){
+              console.log("room full")
+              dateFound = true;
+              break
+            }
+            else{
+            counter.DateNumber += 1;
+            dateFound = true;
+            break;
+            }
+
+          }
+        }
+        if (!dateFound) {
+          // Date not found, add a new entry
+          room.DateCounter.push({
+            Date: date,
+            DateNumber: 1,
+          });
+ 
+        }
+      } 
+        else {
+        // DateCounter is empty, add a new entry
+        
+        room.DateCounter.push({
+          Date: date,
+          DateNumber: 1,
+        });
+      }
+    }
+
+    await room.save();
+    res.send("Hii");
+  })
+);
+
 
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {
   const hotel = await Hotel.findById(req.params.id).populate("Reviews").populate('Rooms');
