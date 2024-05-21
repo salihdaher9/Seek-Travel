@@ -100,7 +100,7 @@ img {
 .item__image .iphone {
   margin-top: -50px;
   margin-left: -100px;
-  width: 400px;
+  width: 550px;
 }
 .item__details {
   padding: 30px;
@@ -172,7 +172,7 @@ input[type="text"] {
 }
 
 .text-validated {
-  border-color: #7dc855;
+  border-color: #0fc1ed;
   background-image: url("../images/icon-tick.png");
   background-repeat: no-repeat;
   background-position: right 18px center;
@@ -208,7 +208,7 @@ input[type="text"] {
 }
 .notification .icon {
   font-size: 28px;
-  color: #7dc855;
+  color: #0fc1ed;
   line-height: 28px;
   margin-right: 10px;
 }
@@ -304,9 +304,9 @@ input[type="text"] {
           transform: translateY(-1px);
 }
 .payment__type.active {
-  color: #0a0a0a;
+  color: #011ec0;
   background: #f6fcf7;
-  border-color: #7dc855;
+  border-color: #0fc1ed;
 }
 .payment__type .icon {
   font-size: 32px;
@@ -366,6 +366,79 @@ input[type="text"] {
 .loading .details__item {
   opacity: 0;
 }
+
+.modal-confirm {		
+	color: #636363;
+	width: 325px;
+	font-size: 14px;
+}
+.modal-confirm .modal-content {
+	padding: 20px;
+	border-radius: 5px;
+	border: none;
+}
+.modal-confirm .modal-header {
+	border-bottom: none;   
+	position: relative;
+}
+.modal-confirm h4 {
+	text-align: center;
+	font-size: 26px;
+	margin: 30px 0 -15px;
+}
+.modal-confirm .form-control, .modal-confirm .btn {
+	min-height: 40px;
+	border-radius: 3px; 
+}
+.modal-confirm .close {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+}	
+.modal-confirm .modal-footer {
+	border: none;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 13px;
+}	
+.modal-confirm .icon-box {
+	color: #fff;		
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: -70px;
+	width: 95px;
+	height: 95px;
+	border-radius: 50%;
+	z-index: 9;
+	background: #82ce34;
+	padding: 15px;
+	text-align: center;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+.modal-confirm .icon-box i {
+	font-size: 58px;
+	position: relative;
+	top: 3px;
+}
+.modal-confirm.modal-dialog {
+	margin-top: 80px;
+}
+.modal-confirm .btn {
+	color: #fff;
+	border-radius: 4px;
+	background: #82ce34;
+	text-decoration: none;
+	transition: all 0.4s;
+	line-height: normal;
+	border: none;
+}
+.modal-confirm .btn:hover, .modal-confirm .btn:focus {
+	background: #6fb32b;
+	outline: none;
+}
+
 
 @-webkit-keyframes spinAround {
   from {
@@ -463,6 +536,13 @@ input[type="text"] {
              
 
             </ul>
+            <div class="item__price">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+              </svg>
+              <%= hotel.location %>
+            </div>
 
           </div>
 
@@ -610,8 +690,8 @@ input[type="text"] {
                   </svg>&nbsp; <b>Travel Information :</b>
             </div>
             <div class="details__user">
-              <div class="user__name">Username : John Doe
-                <br>Price for a night : <b><%= room.price %>$</b>
+              <div class="user__name">Username : <b>John Doe</b>
+                <br>Room Type : <b><%= room.type %></b><br>Price for a night : <b><%= room.price %>$</b>
                 <br><br><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
                     <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
@@ -619,7 +699,7 @@ input[type="text"] {
                 <br><br><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-box-arrow-in-up" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1z"/>
                     <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z"/>
-                  </svg>&nbsp;<b>Check Out Date :<%= out%></b></div>
+                  </svg>&nbsp;<b>Check Out Date : <%= out%></b></div>
                 <br><b>Total : <%= room.price * mydif %>.00$</b></div>
              
             </div>
@@ -631,7 +711,7 @@ input[type="text"] {
     <div class="container">
       <div class="actions">
 
-        <a href="#" class="btn action__submit"><b>Proceed to payment</b>&nbsp;
+        <a href="#myModal" class="btn action__submit" data-toggle="modal"><b>Proceed to payment</b>&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
                 <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
@@ -641,6 +721,29 @@ input[type="text"] {
 
       </div>
   </section>
+  
+  
+  <!-- Modal HTML -->
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+              <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+            </svg>          </div>				
+          <h4 class="modal-title w-100">Awesome!</h4>	
+        </div>
+        <div class="modal-body">
+          <p class="text-center">Your Payment has been confirmed.
+            <br> Check your email for detials.</p>
+        </div>
+        <div class="modal-footer">
+          <button  class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>     
   </div>
 
   <script>
@@ -656,4 +759,6 @@ input[type="text"] {
         });
     });
 });
+
+
   </script>
