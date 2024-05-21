@@ -2,6 +2,7 @@ const Joi = require("joi");
 const ExpressError = require("./ExpressError");
 
 const validateRoomScema = (req, res, next) => {
+  
    req.body.room.Reservations = [];
    req.body.room.DateCounter = [];
 
