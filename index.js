@@ -63,7 +63,6 @@ app.get("/hotels/:id/rooms/new", WrapAsync(async (req, res) => {
 app.post("/hotels/:id/rooms", validateRoomScema, WrapAsync(async (req, res) => {
   const room = req.body.room
   room.currentCounter = 0
-  room.calender = [[]]
   console.log(room)
   const Res = new Room(room)
   const hotel = await Hotel.findById(req.params.id).populate("Rooms");

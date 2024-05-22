@@ -2,10 +2,16 @@ const Joi = require("joi");
 const ExpressError = require("./ExpressError");
 
 const validateRoomScema = (req, res, next) => {
-  
-   req.body.room.Reservations = [];
-   req.body.room.DateCounter = [];
+   if(!req.body.room.Reservations){
+       req.body.room.Reservations = [];
 
+   }
+   if(!req.body.room.DateCounter){
+       req.body.room.DateCounter = [];
+
+   }
+
+   
   const RoomScema = Joi.object({
     room: Joi.object({
       type: Joi.string().required(),
