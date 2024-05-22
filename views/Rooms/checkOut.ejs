@@ -593,18 +593,18 @@ input[type="text"] {
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                   </svg>&nbsp;<b>Personal Information :</b>
             </div>
-            <form>
+            <form action="/hotels/<%= hotel._id %>/rooms/<%= room._id%>/calender" method="POST">
               <div class="form__cc">
                 <div class="row">
                     <div class="field">
-                        <div class="title">First Name :
+                        <div  class="title">First Name :
                         </div>
-                        <input type="text" class="input txt text-validated"  required/>
+                        <input name="Reservation[Name]" type="text" class="input txt text-validated"  required/>
                       </div>
                       <div class="field">
                         <div class="title">Last Name :
                         </div>
-                        <input type="text" class="input txt text-validated"  required/>
+                        <input  type="text" class="input txt text-validated"  required/>
                       </div>
                       <div class="field">
                         <div class="title">Phone Number :
@@ -722,9 +722,10 @@ input[type="text"] {
         </div>
       </div>
     </div>
+    <input style="display: none;"  type="text" id="in" name="body[in]">
+    <input  style="display: none;" type="text" id="out" name="body[out]">
     <div class="container">
       <div class="actions">
-
         <button href="#myModal" class="btn action__submit" data-toggle="modal"><b>Proceed to payment</b>&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
@@ -763,6 +764,11 @@ input[type="text"] {
   </div>
 
   <script>
+    inn=document.getElementById("in")
+    inn.value=`<%=inn%>`
+    out=document.getElementById("out")
+    out.value=`<%=out%>`
+
     document.addEventListener('DOMContentLoaded', (event) => {
     const divs = document.querySelectorAll('.payment__type');
 

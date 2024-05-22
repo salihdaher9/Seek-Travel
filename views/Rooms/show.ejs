@@ -249,12 +249,12 @@ document.getElementById('checkDateCounterBtn').addEventListener('click', functio
             headers: {
                 'Content-Type': 'application/json'
             },
-            body : JSON.stringify({ in: checkOut, out: checkOut })
+            body : JSON.stringify({ in: checkIn, out: checkOut })
         })
         .then(response => response.json())
         .then(data => {
             if (data.illegal) {
-            alert('Illegal dates: ' + data.illegalDatess.join(', '));
+            alert('Illegal dates: ' + data.illegalDates.join(', '));
             } 
             else {
             // No illegal dates, redirect to another page
