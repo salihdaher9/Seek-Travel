@@ -12,6 +12,7 @@ const ValidateHotelSchema = require("./utils/VlaidateMiddlewear"); //hotel schem
 const validateReviewsScema = require("./utils/ValidateReview");    //review schema validation Joi middleware
 const validateRoomScema = require("./utils/ValidateRoom");    //review schema validation Joi middleware
 const { parse, add, format } = require("date-fns");
+const bodyParser = require("body-parser");
 
 mongoose.connect("mongodb://0.0.0.0:27017/Hotels_project", {
   useNewUrlParser: true,
@@ -34,6 +35,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(bodyParser.json());
 
 
 app.get("/hotels", async (req, res) => {
@@ -88,10 +90,11 @@ app.get("/hotels/:id/rooms/:RoomId", WrapAsync(async (req, res, next) => {
   res.render("Rooms/show", { hotel, room });
 
 }))
-app.post("/hotels/:id/rooms/:roomId/calender",WrapAsync(async (req, res, next) => {
-    const inn = req.body.body.in;
-    const out = req.body.body.out;
-    const Roomid = req.params.roomId;
+app.post("/hotels/:id/rooms/:RoomId/calenderCheck",WrapAsync(async (req, res, next) => {
+    console.log(req.body)
+    const inn = req.body.in;
+    const out = req.body.out;
+    const Roomid = req.params.RoomId;
     const id = req.params.id;
     const room = await Room.findById(Roomid);
     const hotel=await Hotel.findById(id);
@@ -101,72 +104,56 @@ app.post("/hotels/:id/rooms/:roomId/calender",WrapAsync(async (req, res, next) =
     for (let datee = add(checkInDate, { days: 1 });datee <= add(checkOutDate, { days: 1 });datee = add(datee, { days: 1 })) {
       dates.push(new Date(datee));
     }
-    console.log(dates);
-    room.Reservations.push({
-      id: "Name",
-      Date: [add(checkInDate, { days: 1 }), add(checkOutDate, { days : 1 })]
-    });  
-    // Iterate over the dates
-    for (let date of dates) {
-      if (room.DateCounter.length !== 0) {
-        // DateCounter is not empty
-        let dateFound = false;
-        for (let counter of room.DateCounter) {
-          // Check if the date already exists
-          if (counter.Date.getTime() === date.getTime()) {
-            if(counter.DateNumber==room.max){
-              console.log("room full")
-              dateFound = true;
-              break
+    illegal=[]
+    for(let date of dates){
+      for(let datec of room.DateCounter){
+          if (datec.Date.getTime() === date.getTime()) {   
+            if(datec.DateNumber>=room.max){
+              illegal.push(date)
             }
-            else{
-            counter.DateNumber += 1;
-            dateFound = true;
-            break;
-            }
-
           }
-        }
-        if (!dateFound) {
-          // Date not found, add a new entry
-          room.DateCounter.push({
-            Date: date,
-            DateNumber: 1,
-          });
- 
-        }
-      } 
-        else {
-        // DateCounter is empty, add a new entry
-        
-        room.DateCounter.push({
-          Date: date,
-          DateNumber: 1,
-        });
       }
     }
 
-    await room.save();
-    const deff = function daysBetween(date1,date2 ) {
-      // Create Date objects
-      const startDate = new Date(date1);
-      const endDate = new Date(date2);
+    if (illegal.length > 0) {
+        console.log(illegal)
+        return res.json({ illegal: true, illegalDates: illegal });
+    } 
+    else {
+        return res.json({ illegal: false });
+    }
+}))
 
-      // Set time components to midnight
-      startDate.setHours(0, 0, 0, 0);
-      endDate.setHours(0, 0, 0, 0);
 
-      // Calculate the difference in milliseconds
-      const differenceMs = endDate - startDate;
 
-      // Convert back to days and return
-      return differenceMs / (1000 * 60 * 60 * 24);
-    };
-    mydif=deff(inn,out)
-    console.log(mydif);
-    res.render("Rooms/checkOut", { room, hotel, inn, out, mydif });
-  })
-);
+app.get("/hotels/:id/rooms/:RoomId/calender",WrapAsync(async (req, res, next) => {
+  const inn=req.query.in
+  const out=req.query.out
+  const hotel=await Hotel.findById(req.params.id)
+  const room = await Room.findById(req.params.RoomId);
+  const deff = function daysBetween(date1, date2) {
+    // Create Date objects
+    const startDate = new Date(date1);
+    const endDate = new Date(date2);
+
+    // Set time components to midnight
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+
+    // Calculate the difference in milliseconds
+    const differenceMs = endDate - startDate;
+
+    // Convert back to days and return
+    return differenceMs / (1000 * 60 * 60 * 24);
+  };
+  mydif = deff(inn, out);
+  console.log(mydif);
+  console.log(room.price)
+
+
+
+  res.render("Rooms/checkOut", { room, hotel, inn, out, mydif });
+}));
 
 
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {
