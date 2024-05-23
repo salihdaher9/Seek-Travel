@@ -90,57 +90,57 @@ app.get("/hotels/:id/rooms/:RoomId", WrapAsync(async (req, res, next) => {
   res.render("Rooms/show", { hotel, room });
 
 }))
-app.post("/hotels/:id/rooms/:RoomId/calenderCheck",WrapAsync(async (req, res, next) => {
-    console.log("--------------------------------");
+app.post("/hotels/:id/rooms/:RoomId/calenderCheck", WrapAsync(async (req, res, next) => {
+  console.log("--------------------------------");
 
-    console.log(req.body)
-    const inn = req.body.in;
-    const out = req.body.out;
-    const Roomid = req.params.RoomId;
-    const id = req.params.id;
-    const room = await Room.findById(Roomid);
+  console.log(req.body)
+  const inn = req.body.in;
+  const out = req.body.out;
+  const Roomid = req.params.RoomId;
+  const id = req.params.id;
+  const room = await Room.findById(Roomid);
 
-    const checkInDate = new Date(inn);
-    const checkOutDate = new Date(out);
-    console.log("--------------------------------");
+  const checkInDate = new Date(inn);
+  const checkOutDate = new Date(out);
+  console.log("--------------------------------");
 
-    const dates = [];
-    for (let datee = add(checkInDate, { days: 1 });datee <= add(checkOutDate, { days: 1 });datee = add(datee, { days: 1 })) {
-      dates.push(new Date(datee));
-    }
-    const illegall=[]
-    console.log(dates)
-    console.log(illegall);
+  const dates = [];
+  for (let datee = add(checkInDate, { days: 1 }); datee <= add(checkOutDate, { days: 1 }); datee = add(datee, { days: 1 })) {
+    dates.push(new Date(datee));
+  }
+  const illegall = []
+  console.log(dates)
+  console.log(illegall);
 
-    for(let date of dates){
-      if (room.DateCounter.length>0){
-          for (let datec of room.DateCounter) {
-          if (datec.Date.getTime() === date.getTime()) {
-            if (datec.DateNumber >= room.max) {
-              illegall.push(date);
-            }
+  for (let date of dates) {
+    if (room.DateCounter.length > 0) {
+      for (let datec of room.DateCounter) {
+        if (datec.Date.getTime() === date.getTime()) {
+          if (datec.DateNumber >= room.max) {
+            illegall.push(date);
           }
         }
-    }      
       }
-
-    console.log("------------")
-    if (illegall.length > 0) {
-      console.log(illegall);
-      console.log("there is illegal")
-      return res.json({ illegal: true, illegalDates: illegall });
-    } else {
-      console.log("sending");
-      return res.json({ illegal: false });
     }
+  }
+
+  console.log("------------")
+  if (illegall.length > 0) {
+    console.log(illegall);
+    console.log("there is illegal")
+    return res.json({ illegal: true, illegalDates: illegall });
+  } else {
+    console.log("sending");
+    return res.json({ illegal: false });
+  }
 }))
 
 
 
-app.get("/hotels/:id/rooms/:RoomId/calender",WrapAsync(async (req, res, next) => {
-  const inn=req.query.in
-  const out=req.query.out
-  const hotel=await Hotel.findById(req.params.id)
+app.get("/hotels/:id/rooms/:RoomId/calender", WrapAsync(async (req, res, next) => {
+  const inn = req.query.in
+  const out = req.query.out
+  const hotel = await Hotel.findById(req.params.id)
   const room = await Room.findById(req.params.RoomId);
   const deff = function daysBetween(date1, date2) {
     // Create Date objects
@@ -158,63 +158,68 @@ app.get("/hotels/:id/rooms/:RoomId/calender",WrapAsync(async (req, res, next) =>
     return differenceMs / (1000 * 60 * 60 * 24);
   };
   mydif = deff(inn, out);
- 
+
 
 
 
   res.render("Rooms/checkOut", { room, hotel, inn, out, mydif });
 }));
 
-app.post("/hotels/:id/rooms/:RoomId/calender",WrapAsync(async (req, res, next) => {
+app.post("/hotels/:id/rooms/:RoomId/calender", WrapAsync(async (req, res, next) => {
   console.log(req.body.body)
   console.log(req.body.Reservation);
 
   const inn = add(new Date(req.body.body.in), { days: 1 });
-  const out = add(new Date(req.body.body.out),{days:1});
-  const name =req.body.Reservation.Name
+  const out = add(new Date(req.body.body.out), { days: 1 });
+  const name = req.body.Reservation.Name
   const room = await Room.findById(req.params.RoomId);
   const hotel = await Hotel.findById(req.params.id);
   room.Reservations.push({
-    id:name,
-    Date:[inn,out]
+    id: name,
+    Date: [inn, out]
   })
-  const dates=[]
-  console.log(inn, out,name)
-  for (let datee=inn;datee <=out;datee = add(datee, { days: 1 })) {
-      dates.push(new Date(datee));
+  const dates = []
+  console.log(inn, out, name)
+  for (let datee = inn; datee <= out; datee = add(datee, { days: 1 })) {
+    dates.push(new Date(datee));
   }
+  //if (datec.Date.getTime() === date.getTime())
   console.log(dates)
-  for (let date of dates) {
-    let found=false
-    console.log(room.DateCounter.length);
-    if(room.DateCounter.length==0){
-      console.log(date)
-      
+  if (room.DateCounter.length === 0) {
+    for (let newDate of dates) {
       room.DateCounter.push({
-        Date:date,
-        DateNumber:1
-    })
-    }
-    else{
-            console.log(date);
-
-    for (let datec of room.DateCounter) {
-      if (datec.Date.getTime() === date.getTime()) {
-           found = true;
-           datec.DateNumber++;
-    }
-    if(found==false){  
-      room.DateCounter.push({
-        Date:date,
-        DateNumber:1
+        Date: newDate,
+        DateNumber: 1
       })
-    
     }
+    return await room.save()
   }
-}
-}
-await room.save()
-res.render("Hotels/show", { hotel });
+  else {
+    for (let date of dates) {
+      const isPresent = room.DateCounter.some(dc => dc.Date.getTime() === date.getTime());
+      if (isPresent) {
+        const dateCounter = room.DateCounter.find(dc => dc.Date.getTime() === date.getTime());
+        dateCounter.DateNumber++;
+        console.log("-------------")
+        console.log(date, isPresent)
+        console.log("-------------")
+      }
+      else {
+        room.DateCounter.push({
+          Date: date,
+          DateNumber: 1
+        })
+      }
+      await room.save()
+    }
+    return await room.save()
+
+
+  }
+
+
+
+
 
 }))
 app.get("/hotels/:id", WrapAsync(async (req, res, next) => {
