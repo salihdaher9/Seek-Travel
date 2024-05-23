@@ -40,7 +40,7 @@ app.use(bodyParser.json());
 
 
 app.get("/hotels", async (req, res) => {
-  const hotels = await Hotel.find({});
+  const hotels = await Hotel.find({}).populate("Reviews");
   res.render("Hotels/index", { hotels });
 });
 
