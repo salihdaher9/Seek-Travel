@@ -172,7 +172,7 @@ input[type="text"] {
 }
 
 .text-validated {
-  border-color: #0fc1ed;
+  border-color: #0b30ff;
   background-image: url("../images/icon-tick.png");
   background-repeat: no-repeat;
   background-position: right 18px center;
@@ -289,7 +289,7 @@ input[type="text"] {
 
 .payment__type {
   display: flex;
-  border: 2px solid #d9d9d9;
+  border: 3px solid #d9d9d9;
   border-radius: 8px;
   padding: 20px 40px;
   width: 100%;
@@ -306,7 +306,7 @@ input[type="text"] {
 .payment__type.active {
   color: #011ec0;
   background: #f6fcf7;
-  border-color: #0fc1ed;
+  border-color: #011ec0;
 }
 .payment__type .icon {
   font-size: 32px;
@@ -599,35 +599,35 @@ input[type="text"] {
                     <div class="field">
                         <div  class="title">First Name :
                         </div>
-                        <input name="Reservation[Name]" type="text" class="input txt text-validated"  required/>
+                        <input name="Reservation[Name]" type="text" class="input txt text-validated" placeholder="enter first name"  required/>
                       </div>
                       <div class="field">
                         <div class="title">Last Name :
                         </div>
-                        <input  type="text" class="input txt text-validated"  required/>
+                        <input  type="text" class="input txt text-validated" placeholder="enter last name" required/>
                       </div>
                       <div class="field">
                         <div class="title">Phone Number :
                         </div>
-                        <input type="text" class="input txt text-validated"  required/>
+                        <input type="text" class="input txt text-validated" placeholder="enter phone number"  required/>
                       </div>
                       <div class="field">
                         <div class="title">Email :
                         </div>
-                        <input type="text" class="input txt text-validated"  required/>
+                        <input type="text" class="input txt text-validated" placeholder="enter your email" required/>
                       </div>
                      
                       
                   <div class="field">
                     <div class="title">Credit Card Number :
                     </div>
-                    <input type="text" class="input txt text-validated" required />
+                    <input type="password" class="input txt text-validated" placeholder="enter card number" required />
                   </div>
                   <div class="field small">
                     <div class="title">CVV Code :
                       <span class="numberCircle">?</span>
                     </div>
-                    <input type="text" class="input txt text-validated" required/>
+                    <input type="password" class="input txt text-validated" placeholder="enter cvv" required/>
                   </div>
                 </div>
                 <div class="row">
@@ -688,7 +688,7 @@ input[type="text"] {
                   <div class="field">
                     <div class="title">Name on Card :
                     </div>
-                    <input type="text" class="input txt text-validated" required />
+                    <input type="text" class="input txt text-validated" placeholder="enter card name" required />
                   </div>
                 </div>
 
