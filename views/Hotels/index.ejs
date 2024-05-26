@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-  <h1 style="text-align: center; ">Hotels : <%= Object.keys(hotels).length %> properties found</h1>
+  <h1 style="text-align: center; color: rgb(255, 255, 255);">Hotels : <%= Object.keys(hotels).length %> properties found</h1>
  
 
  <hr>
@@ -25,7 +25,7 @@
                     
                     <span class="badge rounded-pill bg-primary float-right" style=" font-size: 20px;"><%= Object.keys(hotel.Reviews).length > 0 ? ((hotel.Reviews.reduce((sum, review) => sum + review.rating, 0) / Object.keys(hotel.Reviews).length) * 2).toFixed(1) : (0).toFixed(1) %></span>
                     <p class="float-right"><b>Very Good</b>&nbsp;&nbsp;</p>
-                      <h5 class="card-title" style="color: #1980e7;"><b><%= hotel.name %> </b></h5>
+                      <h5 class="card-title" style="color: rgb(132, 69, 196);"><b><%= hotel.name %> </b></h5>
                       <br>
                       <p class="card-text"><%= hotel.describtion %></p>
                       <p class="card-text">
