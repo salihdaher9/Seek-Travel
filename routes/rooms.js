@@ -32,6 +32,8 @@ router.post("/", validateRoomScema, WrapAsync(async (req, res) => {
     hotel.Rooms.push(Res);
     await Res.save();
     await hotel.save();
+    req.flash('success', 'Successfully made a new room!');
+
     res.redirect(`/hotels/${hotel.id}/rooms/new`);
 }));
 
