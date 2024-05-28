@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const WrapAsync = require('../utils/catchAsync');
-const Hotel = require('../models/hotel')
 const ValidateHotelSchema = require("../utils/VlaidateMiddlewear"); //hotel schema validation Joi middleware 
+const { isLoggedIn } = require('../middleware');
 
-
+const ExpressError = require('../utils/ExpressError');
+const Hotel = require('../models/hotel')
 
 router.get("/", async (req, res) => {
     const hotels = await Hotel.find({}).populate("Reviews");
@@ -12,12 +13,12 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/new", WrapAsync(async (req, res) => {
+router.get("/new", isLoggedIn, WrapAsync(async (req, res) => {
     res.render("Hotels/new");
 }));
 
 
-router.post("/", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
+router.post("/", isLoggedIn, ValidateHotelSchema, WrapAsync(async (req, res, next) => {
 
     const body = req.body.hotel;
     const hotel = new Hotel(body);
@@ -42,7 +43,7 @@ router.get("/:id", WrapAsync(async (req, res, next) => {
 }));
 
 
-router.get("/:id/edit", WrapAsync(async (req, res) => {
+router.get("/:id/edit", isLoggedIn, WrapAsync(async (req, res) => {
     const id = req.params.id;
     const hotel = await Hotel.findById(id);
     if (!hotel) {
@@ -55,7 +56,7 @@ router.get("/:id/edit", WrapAsync(async (req, res) => {
 );
 
 
-router.put("/:id", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
+router.put("/:id", isLoggedIn, ValidateHotelSchema, WrapAsync(async (req, res, next) => {
     const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, { ...req.body.hotel, });
     console.log(`${updatedHotel.name} updated`);
     req.flash('success', 'Successfully updated hotel!');
@@ -63,7 +64,7 @@ router.put("/:id", ValidateHotelSchema, WrapAsync(async (req, res, next) => {
 }));
 
 
-router.delete("/:id", WrapAsync(async (req, res) => {
+router.delete("/:id", isLoggedIn, WrapAsync(async (req, res) => {
     console.log(`${req.params.id} deleted`);
     await Hotel.findByIdAndDelete(req.params.id);
     req.flash('success', 'Successfully deleted hotel!');

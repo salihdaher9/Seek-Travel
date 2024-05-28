@@ -10,7 +10,10 @@
     "joi": "^17.13.1",
     "method-override": "^3.0.0",
     "mongodb": "^6.6.1",
-    "mongoose": "^8.3.4"
+    "mongoose": "^8.3.4",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^8.0.0"
   },
   "name": "hotels_project",
   "description": "Salih_Naeem Project",
