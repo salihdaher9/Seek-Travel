@@ -13,10 +13,14 @@
 
             </div>
             <div class="navbar-nav ml-auto">
-                <a class="nav-link" href="http://localhost:3000/login"><b>login</b></a>
-                <a class="nav-link" href="http://localhost:3000/register"><b>Register</b></a>
+                <% if(user){ %>
                 <a class="nav-link" href="http://localhost:3000/logout"><b>logout</b></a>
 
+                <% } else{%>
+            
+                <a class="nav-link" href="http://localhost:3000/login"><b>login</b></a>
+                <a class="nav-link" href="http://localhost:3000/register"><b>Register</b></a>
+                <% } %>
             </div>
         </div>
         
