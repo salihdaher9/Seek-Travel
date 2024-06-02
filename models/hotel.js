@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Room = require("./room.js");
 const Review = require("./review.js");
+const User= require("./user.js");
 const schema =mongoose.Schema;
 const { Schema, Types } = mongoose; // Importing Types from mongoose
 
@@ -19,6 +20,10 @@ const HotelSchema = new schema({
   Rooms: [{ type: schema.Types.ObjectId, ref: "Room", required: true }],
   Reviews: [{ type: schema.Types.ObjectId, ref: "Review" }],
   Reservations: [{ type: schema.Types.ObjectId, ref: "ReservationSchema" }], // Array of objects with two fields
+  Owner: {
+       type: schema.Types.ObjectId,
+       ref: "User" ,
+  },
 });
 
 

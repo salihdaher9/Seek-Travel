@@ -22,6 +22,7 @@ router.post("/", isLoggedIn, ValidateHotelSchema, WrapAsync(async (req, res, nex
 
     const body = req.body.hotel;
     const hotel = new Hotel(body);
+    hotel.Owner = req.user._id;
     await hotel.save();
     req.flash('success', 'Successfully made a new hotel!');
     console.log(`${hotel.name} Hotel saved`);
@@ -31,7 +32,7 @@ router.post("/", isLoggedIn, ValidateHotelSchema, WrapAsync(async (req, res, nex
 
 
 router.get("/:id", WrapAsync(async (req, res, next) => {
-    const hotel = await Hotel.findById(req.params.id).populate("Reviews").populate('Rooms');
+    const hotel = await Hotel.findById(req.params.id).populate("Reviews").populate('Rooms').populate('Owner');
     if (!hotel) {
         req.flash('error', 'Cannot find that hotel!');
         return res.redirect('/hotels');
