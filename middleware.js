@@ -3,4 +3,5 @@ module.exports.isLoggedIn=(req,res,next)=>{
     req.flash('error',"You must be signed in fisrst");
     return res.redirect('/login');
   }
+  next();
 }

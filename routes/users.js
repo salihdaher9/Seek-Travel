@@ -43,7 +43,7 @@ router.get("/logout", (req, res) => {
         }
         else{
             req.flash('success', 'goodbye!');
-            req.redirect("/hotels");
+            res.redirect("/hotels");
         }
         
 });
