@@ -17,8 +17,7 @@
                   <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
                   <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                 </svg> <%= hotel.location%></li>
-                <li class="list-group-item text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-                  <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                <li class="list-group-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                   <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                 </svg> Posted by: <%= hotel.Owner.username%></li>
 
@@ -87,6 +86,7 @@
 
 
       </div>
+      <% if(user) {%>
       <h1><b>Leave a Review</b></h1>
       <br>
       <form action="/hotels/<%=hotel._id%>/reviews" method="POST" novalidate class="validated-form" >
@@ -108,14 +108,18 @@
           <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
         </svg>&nbsp  <b>Submit</b></button>
       </form>
+      <% } %>
       <hr>
       <br>
       <% for(let rev of hotel.Reviews){%>      
         <div class="card mb-3">
           <div class="card-body">
             <h5 class="card-title"><b>Rating: <%= rev.rating %> / 5</b></h5>
+            <h6 class="card-subtitle mb-2 ">By <%=rev.Owner.username%></h6>
+
             <p class="card-text"><b>Review:</b> <%= rev.body %> </p>
-            <% if(user && hotel.Owner.equals(user._id)){ %>
+
+            <% if(user && rev.Owner.equals(user._id)){ %>
 
             <form action="/hotels/<%=hotel._id%>/reviews/<%=rev._id%>?_method=DELETE" method="POST"  >
                <button 

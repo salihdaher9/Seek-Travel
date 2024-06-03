@@ -33,7 +33,12 @@ router.post("/", isLoggedIn, ValidateHotelSchema, WrapAsync(async (req, res, nex
 
 
 router.get("/:id", WrapAsync(async (req, res, next) => {
-    const hotel = await Hotel.findById(req.params.id).populate("Reviews").populate('Rooms').populate('Owner');
+    const hotel = await Hotel.findById(req.params.id).populate({
+        path:'Reviews',
+        populate:{
+            path: 'Owner'
+        }
+    }).populate('Rooms').populate('Owner');
     if (!hotel) {
         req.flash('error', 'Cannot find that hotel!');
         return res.redirect('/hotels');
