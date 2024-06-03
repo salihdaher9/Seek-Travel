@@ -4,7 +4,7 @@ const WrapAsync = require('../utils/catchAsync');
 const Hotel = require('../models/hotel')
 const Room = require("../models/room");
 const validateRoomScema = require("../utils/ValidateRoom");
-const { parse, add, format } = require("date-fns");
+const {  add } = require("date-fns");
 
 
 

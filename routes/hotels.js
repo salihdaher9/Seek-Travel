@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const WrapAsync = require('../utils/catchAsync');
 const ValidateHotelSchema = require("../utils/VlaidateMiddlewear"); //hotel schema validation Joi middleware 
-const { isLoggedIn } = require('../middleware');
+const { isLoggedIn } = require('../utils/Authorizationmiddleware');
+const { isOwner } = require("../utils/Authorizationmiddleware");
 
 const ExpressError = require('../utils/ExpressError');
 const Hotel = require('../models/hotel')
@@ -44,7 +45,7 @@ router.get("/:id", WrapAsync(async (req, res, next) => {
 }));
 
 
-router.get("/:id/edit", isLoggedIn, WrapAsync(async (req, res) => {
+router.get("/:id/edit", isLoggedIn,isOwner, WrapAsync(async (req, res) => {
     const id = req.params.id;
     const hotel = await Hotel.findById(id);
     if (!hotel) {
@@ -57,7 +58,7 @@ router.get("/:id/edit", isLoggedIn, WrapAsync(async (req, res) => {
 );
 
 
-router.put("/:id", isLoggedIn, ValidateHotelSchema, WrapAsync(async (req, res, next) => {
+router.put("/:id", isLoggedIn,isOwner, ValidateHotelSchema, WrapAsync(async (req, res, next) => {
     const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, { ...req.body.hotel, });
     console.log(`${updatedHotel.name} updated`);
     req.flash('success', 'Successfully updated hotel!');
@@ -65,7 +66,7 @@ router.put("/:id", isLoggedIn, ValidateHotelSchema, WrapAsync(async (req, res, n
 }));
 
 
-router.delete("/:id", isLoggedIn, WrapAsync(async (req, res) => {
+router.delete("/:id", isLoggedIn,isOwner, WrapAsync(async (req, res) => {
     console.log(`${req.params.id} deleted`);
     await Hotel.findByIdAndDelete(req.params.id);
     req.flash('success', 'Successfully deleted hotel!');

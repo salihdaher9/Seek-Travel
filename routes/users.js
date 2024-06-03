@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const catchAsync = require('../utils/catchAsync');
 const User = require('../models/user');
-const { storeReturnTo } = require("../middleware");
+const { storeReturnTo } = require("../utils/Authorizationmiddleware");
 
 router.get('/register', (req, res) => {
     res.render('users/register');
