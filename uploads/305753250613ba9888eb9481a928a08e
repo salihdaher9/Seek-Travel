@@ -1,0 +1,51 @@
+C code:
+
+
+int Ignore2Powers (n) int n;
+/* return the largest odd number that divides n */
+{
+    while (n%2 == 0) n = n/2;
+    return n;
+}
+
+
+<KEYWORD, int-INT>
+<IDENTIFIER, Ignore2Powers>
+<PUNCTUATION, (-OPEN_PAREN>
+<IDENTIFIER, n>
+<PUNCTUATION, )-CLOSE_PAREN>
+<KEYWORD, int-INT>
+<IDENTIFIER, n>
+<PUNCTUATION, ;-SEMICOLON>
+<PUNCTUATION, {-OPEN_BRACE>
+<KEYWORD, while-WHILE>
+<PUNCTUATION, (-OPEN_PAREN>
+<IDENTIFIER, n>
+<OPERATOR, %-MOD>
+<NUMBER, 2>
+<OPERATOR, ==-EQUAL>
+<NUMBER, 0>
+<PUNCTUATION, )-CLOSE_PAREN>
+<IDENTIFIER, n>
+<OPERATOR, =-ASSIGN>
+<IDENTIFIER, n>
+<OPERATOR, /-DIV>
+<NUMBER, 2>
+<PUNCTUATION, ;-SEMICOLON>
+<KEYWORD, return-RETURN>
+<IDENTIFIER, n>
+<PUNCTUATION, ;-SEMICOLON>
+<PUNCTUATION, }-CLOSE_BRACE>
+
+
+
+
+
+Pascal code:
+
+function Ignore2Powers (n : integer) : integer;
+{ return the largest odd number that divides n }
+begin
+    while n mod 2 = 0 do n := n div 2;
+    Ignore2Powers := n
+end;

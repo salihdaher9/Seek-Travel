@@ -5,17 +5,26 @@ const WrapAsync = require('../utils/catchAsync');
 const ValidateHotelSchema = require("../utils/VlaidateMiddlewear"); //hotel schema validation Joi middleware 
 const { isLoggedIn } = require('../utils/Authorizationmiddleware');
 const { isOwner } = require("../utils/Authorizationmiddleware");
+const multer=require('multer');
+const {storage}=require('../cloudinary')
+const upload = multer({storage})
 
-const ExpressError = require('../utils/ExpressError');
-const Hotel = require('../models/hotel')
 
-router.get("/", hotels.index);
+router
+  .route("/")
+  .get(hotels.index)
+  // .post(isLoggedIn, ValidateHotelSchema, WrapAsync(hotels.createHotelasync));
+  .post(upload.array('image'),(req,res)=>{
+    console.log(req.files,req.body);
+    res.send(req.files)
+
+
+  });
 
 
 router.get("/new", isLoggedIn, WrapAsync(hotels.renderNewForm));
 
 
-router.post("/", isLoggedIn, ValidateHotelSchema, WrapAsync(hotels.createHotelasync));
 
 
 router.get("/:id", WrapAsync(hotels.showHotel));
