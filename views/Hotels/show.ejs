@@ -1,5 +1,5 @@
 <% layout('layouts/noContainerBoilerPlate')%>
- 
+<link rel="stylesheet" href="/stylesheets/stars.css">
 
   <div class="row">
     <div class="col-6 ">
@@ -62,11 +62,13 @@
               <div class="card-body">
                 <h5 class="card-title"><%= room.type %>%></h5>
                 <p class="card-text"><%= room.description%></p>
+                <% if(user) {%>
                 <form action="/Hotels/<%=hotel._id%>/rooms/<%= room.id %>" method="GET">
                   <button class="btn btn-primary float-left"><b>View Price</b>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
                   </svg></button>
                 </form>
+                <% } %>
                 <% if(user && hotel.Owner.equals(user._id)){ %>
 
                 <form class="d-inline" action="/hotels/<%= hotel._id %>/rooms/<%=room._id%>?_method=DELETE" method="POST">
@@ -87,13 +89,23 @@
 
       </div>
       <% if(user) {%>
-      <h1><b>Leave a Review</b></h1>
+      <h2><b>Leave a Review</b></h2>
       <br>
       <form action="/hotels/<%=hotel._id%>/reviews" method="POST" novalidate class="validated-form" >
-        <div class="mb-3">
-          <label style="font-size: larger;" for="rating"><b>Rating :</b></label>
-          <input type="range"  class="form-range"  min="1" max="5" id="body" name="review[rating]">
-        </div>
+        <fieldset class="starability-coinFlip">
+          <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
+              aria-label="No rating." />
+          <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+      </fieldset>
         <div>
           <div>
               <label style="font-size: larger;" for="body" class="mb-3"><b>Review :</b></label>
@@ -108,14 +120,23 @@
           <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
         </svg>&nbsp  <b>Submit</b></button>
       </form>
-      <% } %>
       <hr>
       <br>
+      <% } %>
+      <% if(!user) {%>
+        <h2><b>Reviews :</b></h2>
+        <% } %>
+      
       <% for(let rev of hotel.Reviews){%>      
         <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title"><b>Rating: <%= rev.rating %> / 5</b></h5>
-            <h6 class="card-subtitle mb-2 ">By <%=rev.Owner.username%></h6>
+            <h5 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>&nbsp; <%= rev.Owner.username%></h5>
+            <p class="starability-result" data-rating="<%=rev.rating%>">
+              Rated: <%= rev.rating %> stars
+          </p>
 
             <p class="card-text"><b>Review:</b> <%= rev.body %> </p>
 
