@@ -1,5 +1,8 @@
 const Hotel = require('../models/hotel')
-const {cloudinary}=require('../cloudinary')
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
+const { cloudinary } = require('../cloudinary')
 
 module.exports.index = async (req, res) => {
     const hotels = await Hotel.find({}).populate("Reviews");
@@ -11,10 +14,14 @@ module.exports.renderNewForm = async (req, res) => {
 }
 
 module.exports.createHotelasync = async (req, res, next) => {
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.hotel.location,
+        limit: 1
+    }).send()
     const body = req.body.hotel;
     const hotel = new Hotel(body);
-    
-    hotel.images=req.files.map(f=>({url:f.path,filename:f.filename}))
+    hotel.geometry = geoData.body.features[0].geometry;
+    hotel.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
     hotel.Owner = req.user._id;
     await hotel.save();
     console.log(hotel);
@@ -57,20 +64,20 @@ module.exports.updateHotel = async (req, res, next) => {
     console.log("------------------------------")
 
     const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, { ...req.body.hotel, });
-    const images=req.files.map(f=>({url:f.path,filename:f.filename}))
-    updatedHotel.Rooms=[]
+    const images = req.files.map(f => ({ url: f.path, filename: f.filename }))
+    updatedHotel.Rooms = []
     updatedHotel.Reviews = [];
 
     updatedHotel.images.push(...images);
     await updatedHotel.save();
-    if (req.body.dleteImages){
-      for(let filename of req.body.dleteImages){
-        await cloudinary.uploader.destroy(filename)
+    if (req.body.dleteImages) {
+        for (let filename of req.body.dleteImages) {
+            await cloudinary.uploader.destroy(filename)
 
-      }
-      await Hotel.updateOne({
-        $pull: { images: { filename: { $in: req.body.dleteImages } } },
-      });
+        }
+        await Hotel.updateOne({
+            $pull: { images: { filename: { $in: req.body.dleteImages } } },
+        });
     }
     await updatedHotel.save();
 

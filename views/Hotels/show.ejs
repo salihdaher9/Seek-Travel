@@ -137,6 +137,7 @@
 
 
       </div>
+      <div id='map' style='width: 100%; height: 300px;'></div>
       <% if(user) {%>
       <h2><b>Leave a Review</b></h2>
       <br>
@@ -206,6 +207,10 @@
     
     </div>
 </div>
+<script>
+  const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+  const hotel = <%- JSON.stringify(hotel) %>
+</script>
 
 <script>
 const Addbtn = document.getElementById("roomAdd")
@@ -214,7 +219,7 @@ Addbtn.addEventListener("click",(e)=>{
   window.location.href="http://localhost:3000/hotels/<%=hotel._id%>/rooms/new"
 })
 
-
 </script>
 
 
+<script src="/js/showPageMap.js"></script>
