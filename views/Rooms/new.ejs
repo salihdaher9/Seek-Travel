@@ -3,7 +3,7 @@
   
     <h1 class="text-center"> Add a new Room Type</h1>
     <div class="col-6 offset-3">
-    <form method="post" action="/hotels/<%= hotel._id %>/rooms" novalidate class="validated-form"> 
+    <form method="post" action="/hotels/<%= hotel._id %>/rooms" novalidate class="validated-form" enctype="multipart/form-data" > 
       <div class="mb-3">
         <label class="form-label" for="name">Type Name</label>
         <input class="form-control" type="text" name="room[type]" id="type" placeholder="enter name" required>
@@ -20,12 +20,9 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label" for="location">image</label>
-        <input class="form-control" type="text" name="room[pictures]" id="pictures" placeholder="enter image" required>
-        <div class="valid-feedback">
-          Looks good!
-      </div>
-      </div>
+        <input type="file" name="room[images]" id="room[images]" multiple>
+
+        </div>
       
     
       <div class="mb-3">

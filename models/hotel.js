@@ -10,12 +10,19 @@ const ReservationSchema = new Schema({
   Date: { type: Date },
 });
 
+const imageSchema = new Schema({
+  url: String,
+  filename: String,
 
+});
+imageSchema.virtual('thumbnail').get(function(){
+  return this.url.replace('/upload','/upload/w_200')
 
+})
 const HotelSchema = new schema({
   name: { type: String, required: true },
   describtion: { type: String, required: true },
-  images: [{ type: String, required: true }],
+  images: [imageSchema],
   location: { type: String, required: true },
   Rooms: [{ type: schema.Types.ObjectId, ref: "Room", required: true }],
   Reviews: [{ type: schema.Types.ObjectId, ref: "Review" }],

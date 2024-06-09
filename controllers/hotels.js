@@ -1,5 +1,5 @@
 const Hotel = require('../models/hotel')
-
+const {cloudinary}=require('../cloudinary')
 
 module.exports.index = async (req, res) => {
     const hotels = await Hotel.find({}).populate("Reviews");
@@ -11,11 +11,13 @@ module.exports.renderNewForm = async (req, res) => {
 }
 
 module.exports.createHotelasync = async (req, res, next) => {
-
     const body = req.body.hotel;
     const hotel = new Hotel(body);
+    
+    hotel.images=req.files.map(f=>({url:f.path,filename:f.filename}))
     hotel.Owner = req.user._id;
     await hotel.save();
+    console.log(hotel);
     req.flash('success', 'Successfully made a new hotel!');
     console.log(`${hotel.name} Hotel saved`);
     res.redirect(`/hotels/${hotel.id}`);
@@ -51,7 +53,27 @@ module.exports.renderEditForm = async (req, res) => {
 }
 
 module.exports.updateHotel = async (req, res, next) => {
+    console.log(req.body)
+    console.log("------------------------------")
+
     const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, { ...req.body.hotel, });
+    const images=req.files.map(f=>({url:f.path,filename:f.filename}))
+    updatedHotel.Rooms=[]
+    updatedHotel.Reviews = [];
+
+    updatedHotel.images.push(...images);
+    await updatedHotel.save();
+    if (req.body.dleteImages){
+      for(let filename of req.body.dleteImages){
+        await cloudinary.uploader.destroy(filename)
+
+      }
+      await Hotel.updateOne({
+        $pull: { images: { filename: { $in: req.body.dleteImages } } },
+      });
+    }
+    await updatedHotel.save();
+
     console.log(`${updatedHotel.name} updated`);
     req.flash('success', 'Successfully updated hotel!');
     res.redirect(`/hotels/${req.params.id}`);

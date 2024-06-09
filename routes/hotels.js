@@ -13,13 +13,8 @@ const upload = multer({storage})
 router
   .route("/")
   .get(hotels.index)
-  // .post(isLoggedIn, ValidateHotelSchema, WrapAsync(hotels.createHotelasync));
-  .post(upload.array('image'),(req,res)=>{
-    console.log(req.files,req.body);
-    res.send(req.files)
-
-
-  });
+  .post(isLoggedIn,upload.array('image'), ValidateHotelSchema, WrapAsync(hotels.createHotelasync));
+  
 
 
 router.get("/new", isLoggedIn, WrapAsync(hotels.renderNewForm));
@@ -31,7 +26,7 @@ router.get("/:id", WrapAsync(hotels.showHotel));
 
 router.get("/:id/edit", isLoggedIn, isOwner, WrapAsync(hotels.renderEditForm));
 
-router.put("/:id", isLoggedIn, isOwner, ValidateHotelSchema, WrapAsync(hotels.updateHotel));
+router.put("/:id", isLoggedIn, isOwner,upload.array('image'),ValidateHotelSchema, WrapAsync(hotels.updateHotel));
 
 router.delete("/:id", isLoggedIn, isOwner, WrapAsync(hotels.deleteHotel));
 

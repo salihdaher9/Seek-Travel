@@ -1,30 +1,32 @@
 // validateHotelSchema.js
+const Hotel = require('../models/hotel')
 
 const Joi = require("joi");
 const ExpressError = require("../utils/ExpressError")
 
-const validateHotelSchema = (req, res, next) => {
-  if(!req.body.hotel.Rooms ){
-      req.body.hotel.Rooms = [];
+const validateHotelSchema = async (req, res, next) => {
+  if (!req.body.hotel) {
+    req.body.hotel = {};
   }
-  if(!req.body.hotel.Reviews ){
-      req.body.hotel.Reviews = [];
-  }
-  if(!req.body.hotel.Reservations ){
-      req.body.hotel.Reservations = [];
-  }
+  const hotel = await Hotel.findOne({ name: req.body.hotel.name });
+
+  // Ensure Rooms, Reviews, and Reservations are arrays if they don't exist
+  req.body.hotel.Rooms = req.body.hotel.Rooms || [];
+  req.body.hotel.Reviews = req.body.hotel.Reviews || [];
+  req.body.hotel.Reservations = req.body.hotel.Reservations || [];
 
   
   const HotelSchemaJoi = Joi.object({
     hotel: Joi.object({
       name: Joi.string().required(),
       describtion: Joi.string().required(),
-      image: Joi.string().required(),
+      //  images: Joi.array().required(),
       location: Joi.string().required(),
       Rooms: Joi.array().required(),
       Reviews: Joi.array().required(),
       Reservations: Joi.array().required(), // Array of objects with two fields
     }).required(),
+    dleteImages:Joi.array()
   });
 
   const result = HotelSchemaJoi.validate(req.body);

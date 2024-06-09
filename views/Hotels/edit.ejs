@@ -6,7 +6,7 @@
     <div class="row">
       <h1 class="text-center"> Edit hotel</h1>
       <div class="col-6 offset-3">
-        <form novalidate class="validated-form"  action="/hotels/<%=hotel._id %>?_method=PUT" method="POST"> 
+        <form novalidate class="validated-form"  action="/hotels/<%=hotel._id %>?_method=PUT" method="POST" enctype="multipart/form-data"> 
   
         <div class="mb-3">
           <label class="form-label" for="name">Name</label>
@@ -23,18 +23,29 @@
         </div>
         </div>
         <div class="mb-3">
-          <label class="form-label" for="image">image</label>
-          <input class="form-control" type="text" name="hotel[image]" id="image" value="<%= hotel.image %>" required>
-          <div class="valid-feedback">
+            <label style="font-size: larger;" class="form-label" for="image">Add Images </label>
+            <input type="file" name="image" id="image" multiple>
+    
+    
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="location">location</label>
+            <input class="form-control" type="text" name="hotel[location]" id="location" value="<%= hotel.location %>" required>
+            <div class="valid-feedback">
             Looks good!
         </div>
         </div>
         <div class="mb-3">
-          <label class="form-label" for="location">location</label>
-          <input class="form-control" type="text" name="hotel[location]" id="location" value="<%= hotel.location %>" required>
-          <div class="valid-feedback">
-            Looks good!
-        </div>
+          <% hotel.images.forEach(function(img,i){ %>
+            <img src="<%= img.thumbnail %>" class="img-thumbnail">
+            <div class="form-check-inline">
+              <input type="checkbox" id="image_<%= i %>" name="dleteImages[]" value="<%= img.filename %>">
+              <label for="image_<%= i %>">delete?</label>
+
+            </div>
+
+
+          <% }) %>
         </div>
         <div class="mb-3">
         <button class="btn btn-success">Update hotel</button>

@@ -1,6 +1,7 @@
 const Hotel = require('../models/hotel')
 const Room = require("../models/room");
 const { add } = require("date-fns");
+const { cloudinary } = require("../cloudinary");
 
 
 module.exports.renderNewRoom = async (req, res) => {
@@ -22,6 +23,8 @@ module.exports.creatRoom = async (req, res) => {
     room.currentCounter = 0
     console.log(room)
     const Res = new Room(room)
+    Res.images = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+
     const hotel = await Hotel.findById(req.params.id).populate("Rooms");
     hotel.Rooms.push(Res);
     await Res.save();
@@ -116,10 +119,11 @@ module.exports.creatReservations = async (req, res, next) => {
     const inn = add(new Date(req.body.body.in), { days: 1 });
     const out = add(new Date(req.body.body.out), { days: 1 });
     const name = req.body.Reservation.Name
+
     const room = await Room.findById(req.params.RoomId);
     const hotel = await Hotel.findById(req.params.id);
     room.Reservations.push({
-        id: name,
+        id: req.user.id,
         Date: [inn, out]
     })
     const dates = []
