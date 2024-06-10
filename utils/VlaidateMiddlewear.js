@@ -8,12 +8,11 @@ const validateHotelSchema = async (req, res, next) => {
   if (!req.body.hotel) {
     req.body.hotel = {};
   }
-  const hotel = await Hotel.findOne({ name: req.body.hotel.name });
-
+  const hotel = await Hotel.findById(req.params.id);
   // Ensure Rooms, Reviews, and Reservations are arrays if they don't exist
-  req.body.hotel.Rooms = req.body.hotel.Rooms || [];
-  req.body.hotel.Reviews = req.body.hotel.Reviews || [];
-  req.body.hotel.Reservations = req.body.hotel.Reservations || [];
+  req.body.hotel.Rooms = hotel.Rooms || [];
+  req.body.hotel.Reviews = hotel.Reviews || [];
+  req.body.hotel.Reservations = hotel.Reservations || [];
 
   
   const HotelSchemaJoi = Joi.object({

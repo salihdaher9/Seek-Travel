@@ -60,14 +60,8 @@ module.exports.renderEditForm = async (req, res) => {
 }
 
 module.exports.updateHotel = async (req, res, next) => {
-    console.log(req.body)
-    console.log("------------------------------")
-
     const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, { ...req.body.hotel, });
-    const images = req.files.map(f => ({ url: f.path, filename: f.filename }))
-    updatedHotel.Rooms = []
-    updatedHotel.Reviews = [];
-
+    const images = req.files.map(f => ({ url: f.path, filename: f.filename })) 
     updatedHotel.images.push(...images);
     await updatedHotel.save();
     if (req.body.dleteImages) {
