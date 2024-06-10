@@ -1,12 +1,11 @@
 <% layout('layouts/boilerplate')%>
-<div id="map" style="width: 100%; height: 500px"></div>
-  <h1 style="text-align: center; color: rgb(255, 255, 255);">Hotels : <%= Object.keys(hotels).length %> properties found</h1>
+  <h1 style="text-align: center; color: black">Hotels : <%= Object.keys(hotels).length %> properties found</h1>
  
 
  <hr>
    
     <% for (let hotel of hotels){%>
-      <div style="background: #f7f7f7;
+      <div style="background: white;
       
       border-radius: 15px;
       box-shadow: 5px 5px 5px rgba(0, 0, 0.1, 0.3);
@@ -26,7 +25,7 @@
                     
                     <span class="badge rounded-pill bg-primary float-right" style=" font-size: 20px;"><%= Object.keys(hotel.Reviews).length > 0 ? ((hotel.Reviews.reduce((sum, review) => sum + review.rating, 0) / Object.keys(hotel.Reviews).length) * 2).toFixed(1) : (0).toFixed(1) %></span>
                     <p class="float-right"><b>Very Good</b>&nbsp;&nbsp;</p>
-                      <h5 class="card-title" style="color: rgb(132, 69, 196);"><b><%= hotel.name %> </b></h5>
+                      <h5 class="card-title" style="color: #2E67F8;"><b><%= hotel.name %> </b></h5>
                       <br>
                       <p class="card-text"><%= hotel.describtion %></p>
                       <p class="card-text">

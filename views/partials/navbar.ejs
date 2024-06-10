@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark"  >
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary"  >
     <div class="container-fluid">
         <a class="navbar-brand"  href="/"><b>Booking.com</b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -14,13 +14,13 @@
             </div>
             <div class="navbar-nav ml-auto">
                 <% if(user){ %>
-                <a class="nav-link" href="http://localhost:3000/logout"><b>logout</b></a>
+                <button type = "button" class = "btn btn-outline-light" onclick="location.href=' http://localhost:3000/logout' "><b>Log Out</b></button>
 
                 <% } else{%>
             
-                <button type = "button" class = "btn btn-primary navbar-btn" onclick="location.href=' http://localhost:3000/login' "><b>Sign in</b></button>
+                <button type = "button" class = "btn btn-outline-light " onclick="location.href=' http://localhost:3000/login' "><b>Sign in</b></button>
                 &nbsp;&nbsp;
-                <button type = "button" class = "btn btn-primary navbar-btn" onclick="location.href=' http://localhost:3000/register' "><b>Register</b></button>
+                <button type = "button" class = "btn btn-outline-light" onclick="location.href=' http://localhost:3000/register' "><b>Sign Up</b></button>
               
                 <% } %>
             </div>
