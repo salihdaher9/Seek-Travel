@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("./user");
 
 const Schema = mongoose.Schema;
 
@@ -17,7 +18,10 @@ const RoomSchema = new Schema({
   max: { type: Number },
   Reservations: [
     {
-      id: { type: String },
+      id: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
       Date: [{ type: Date }],
     },
   ],

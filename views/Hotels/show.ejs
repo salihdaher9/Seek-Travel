@@ -66,7 +66,21 @@
          
 
         </div>
-      
+        <% for(let room of hotel.Rooms) { %>
+          <% for (let reserv of room.Reservations) { %>
+            <div class="card" style="width: 18rem;">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <%= reserv.id.username %> <%= room.type %> 
+                  <%= reserv.Date[0].toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %> /
+                  <%= reserv.Date[1].toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %>
+
+                </li>
+              </ul>
+            </div>
+          <% } %>
+        <% } %>
+        
       
     </div>
     <% if(hotel.images.length<=1) {%>

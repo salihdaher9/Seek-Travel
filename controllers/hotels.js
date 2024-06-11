@@ -32,12 +32,20 @@ module.exports.createHotelasync = async (req, res, next) => {
 }
 
 module.exports.showHotel = async (req, res, next) => {
-    const hotel = await Hotel.findById(req.params.id).populate({
-        path: 'Reviews',
+    const hotel = await Hotel.findById(req.params.id)
+      .populate({
+        path: "Reviews",
         populate: {
-            path: 'Owner'
-        }
-    }).populate('Rooms').populate('Owner');
+          path: "Owner",
+        },
+      })
+      .populate({
+        path: "Rooms",
+        populate: {
+          path: "Reservations.id",
+        },
+      })
+      .populate("Owner");
     if (!hotel) {
         req.flash('error', 'Cannot find that hotel!');
         return res.redirect('/hotels');
