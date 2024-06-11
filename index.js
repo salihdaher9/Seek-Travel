@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 
 }
@@ -83,6 +83,10 @@ app.use('/hotels', hotels);
 app.use("/hotels/:id/reviews", reviews);
 app.use("/hotels/:id/rooms", rooms);
 
+
+app.get('/', (req, res) => {
+  res.render('home')
+});
 
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404))
