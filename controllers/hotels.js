@@ -61,6 +61,14 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateHotel = async (req, res, next) => {
     const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, { ...req.body.hotel, });
+    const geoData = await geocoder
+      .forwardGeocode({
+        query: updatedHotel.location,
+        limit: 1,
+      })
+      .send();
+    updatedHotel.geometry = geoData.body.features[0].geometry;
+
     const images = req.files.map(f => ({ url: f.path, filename: f.filename })) 
     updatedHotel.images.push(...images);
     await updatedHotel.save();

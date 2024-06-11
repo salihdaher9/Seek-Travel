@@ -9,7 +9,7 @@
           <% hotel.images.forEach((img,i)=>{ %>
             
           <div class="carousel-item <%= i===0 ? "active" : ""  %> ">
-            <img style=" max-height: 450px;" class="d-block w-100" src="<%= img.url %>" alt="First slide">
+            <img  class="d-block w-100 img-fluid" src="<%= img.url %>" alt="First slide">
           </div>
           <% }) %>
         </div>
@@ -79,7 +79,9 @@
         <div id='map' style='width: 100%; height: 370px;'></div>
         
 <hr>
+<% if(hotel.Rooms.length){ %>
 <h3>Pick a Room :</h3>
+<% } %>
         <% for (let room of hotel.Rooms) { %>
           <!-- About 5 - Bootstrap Brain Component -->
           
@@ -94,7 +96,7 @@
       <% room.images.forEach((img,i)=>{ %>
         
       <div class="carousel-item <%= i===0 ? "active" : ""  %> ">
-        <img style=" max-height: 450px;" class="d-block w-100" src="<%= img.url %>" alt="First slide">
+        <img style=" max-height: 450px; " class="d-block w-100" src="<%= img.url %>" alt="First slide">
       </div>
       <% }) %>
     </div>

@@ -1,13 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
+const Hotel = require("./hotel");
 
 const UserSchema = new Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    }
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  Reservations: [
+    {
+      hotelId:{  
+        type: Schema.Types.ObjectId,
+        ref: "Hotel"},
+      Roomid: { type: String },
+      Date: [{ type: Date }],
+    },
+  ],
 });
 
 UserSchema.plugin(passportLocalMongoose);

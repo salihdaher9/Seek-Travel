@@ -10,9 +10,18 @@ const validateHotelSchema = async (req, res, next) => {
   }
   const hotel = await Hotel.findById(req.params.id);
   // Ensure Rooms, Reviews, and Reservations are arrays if they don't exist
+  if (!hotel){
+     req.body.hotel.Rooms =  [];
+     req.body.hotel.Reviews =  [];
+     req.body.hotel.Reservations =  [];
+
+  }
+  else{
   req.body.hotel.Rooms = hotel.Rooms || [];
   req.body.hotel.Reviews = hotel.Reviews || [];
   req.body.hotel.Reservations = hotel.Reservations || [];
+  }
+
 
   
   const HotelSchemaJoi = Joi.object({
