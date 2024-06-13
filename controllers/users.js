@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const { use } = require('../routes/users');
 
 module.exports.renderRegister = (req, res) => {
     res.render('users/register');
@@ -46,4 +47,22 @@ module.exports.logout = (req, res) => {
 
     });
 
+}
+
+
+module.exports.renderCart = async (req, res) => {
+    const user = await User.findById(req.user.id)
+        .populate({
+            path: 'Reservations.hotelId',
+            model: 'Hotel',
+            select: 'name describtion location images'
+
+        })
+        .populate({
+            path: 'Reservations.Roomid',
+            model: 'Room',
+            select: 'type description price'
+        })
+
+    res.render("users/cart", { user });
 }

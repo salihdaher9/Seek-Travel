@@ -1,5 +1,6 @@
 const Hotel = require('../models/hotel')
 const Room = require("../models/room");
+const User = require("../models/user");
 const { add } = require("date-fns");
 const { cloudinary } = require("../cloudinary");
 
@@ -122,10 +123,23 @@ module.exports.creatReservations = async (req, res, next) => {
 
     const room = await Room.findById(req.params.RoomId);
     const hotel = await Hotel.findById(req.params.id);
+    const user = await User.findById(req.user.id);
+
+    user.Reservations.push({
+        hotelId: req.params.id,
+        Roomid: req.params.RoomId,
+        Date: [inn, out]
+    })
+
     room.Reservations.push({
         id: req.user.id,
         Date: [inn, out]
     })
+
+    await user.save()
+
+
+
     const dates = []
     console.log(inn, out, name)
     for (let datee = inn; datee <= out; datee = add(datee, { days: 1 })) {

@@ -11,13 +11,17 @@ const UserSchema = new Schema({
   },
   Reservations: [
     {
-      hotelId:{  
+      hotelId: {
         type: Schema.Types.ObjectId,
-        ref: "Hotel"},
-      Roomid: { type: String },
+        ref: "Hotel"
+      },
+      Roomid: {
+        type: Schema.Types.ObjectId,
+        ref: "Room"
+      },
       Date: [{ type: Date }],
     },
-  ],
+  ]
 });
 
 UserSchema.plugin(passportLocalMongoose);
