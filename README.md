@@ -2,6 +2,18 @@
 🌍 Seek Travel
 A full-stack hotel booking platform where users can browse and reserve hotel rooms or manage their own listings.
 
+🛠️ Tech Stack
+Frontend: Vanilla JavaScript, HTML, CSS, EJS
+
+Backend: Node.js, Express.js
+
+Database: MongoDB (Mongoose)
+
+Authentication: Passport.js
+
+Image Hosting: Cloudinary
+
+
 📸 Screenshots
 ![Screenshot 2025-04-25 155617](https://github.com/user-attachments/assets/1c382f27-d806-4f30-852e-09dfd175053a)
 ![Screenshot 2025-04-25 154636](https://github.com/user-attachments/assets/98ae6e3b-2a03-4a24-ac50-74a4340afbb9)
