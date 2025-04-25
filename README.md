@@ -1,57 +1,56 @@
+# 🌍 Seek Travel
 
-🌍 Seek Travel
-A full-stack hotel booking platform where users can browse and reserve hotel rooms or manage their own listings.
+A full-stack hotel booking platform where users can browse and reserve hotel rooms or manage their own listings. Designed with a clean user interface and built for performance and usability.
 
-🛠️ Tech Stack
-Frontend: Vanilla JavaScript, HTML, CSS, EJS
+---
 
-Backend: Node.js, Express.js
+## 🛠️ Tech Stack
 
-Database: MongoDB (Mongoose)
+**Frontend:**  
+- Vanilla JavaScript  
+- HTML, CSS  
+- EJS  
+- Bootstrap  
 
-Authentication: Passport.js
+**Backend:**  
+- Node.js  
+- Express.js  
 
-Image Hosting: Cloudinary
+**Database:**  
+- MongoDB (via Mongoose)
 
+**Authentication:**  
+- Passport.js (Session-based)
 
-📸 Screenshots
-![Screenshot 2025-04-25 155617](https://github.com/user-attachments/assets/1c382f27-d806-4f30-852e-09dfd175053a)
-![Screenshot 2025-04-25 154636](https://github.com/user-attachments/assets/98ae6e3b-2a03-4a24-ac50-74a4340afbb9)
+**Other Tools:**  
+- Cloudinary (Image Hosting)  
+- MapBox (Location & Maps)  
+- Git & GitHub (Version Control)
 
+---
 
-![Screenshot 2025-04-25 154724](https://github.com/user-attachments/assets/17172b83-6d79-41e3-aa20-0d704e277beb)
+## 🔧 Technical Overview
 
-![Screenshot 2025-04-25 154822](https://github.com/user-attachments/assets/e39e587c-29d7-47ae-82fd-12c7cd813fb5)
+- Implemented **client- and server-side authentication/authorization** using sessions and Passport.js.
+- Stored and managed hotel images in the cloud via **Cloudinary**.
+- Used **MapBox** for location services and displaying maps.
+- Structured the backend with **clean middleware and route separation**.
+- Included **comprehensive error handling** to ensure app stability and enhance user experience.
 
-![Screenshot 2025-04-25 155617](https://github.com/user-attachments/assets/c7cd6763-9ca8-4e48-a8f5-beaecd89fe5c)
+---
 
+## 📸 Screenshots
 
-![Screenshot 2025-04-25 155454](https://github.com/user-attachments/assets/e828d2b7-6014-4bd1-a453-d983a6b30df2)
+> *(Screenshots from various parts of the platform)*
 
+![Homepage](https://github.com/user-attachments/assets/1c382f27-d806-4f30-852e-09dfd175053a)
+![Login](https://github.com/user-attachments/assets/98ae6e3b-2a03-4a24-ac50-74a4340afbb9)
+![Dashboard](https://github.com/user-attachments/assets/17172b83-6d79-41e3-aa20-0d704e277beb)
+![Hotel Management](https://github.com/user-attachments/assets/e39e587c-29d7-47ae-82fd-12c7cd813fb5)
+![Reservation View](https://github.com/user-attachments/assets/c7cd6763-9ca8-4e48-a8f5-beaecd89fe5c)
+![Map Integration](https://github.com/user-attachments/assets/e828d2b7-6014-4bd1-a453-d983a6b30df2)
+![Booking Form](https://github.com/user-attachments/assets/b4b58013-d967-41ca-a958-3b4419411288)
+![User History](https://github.com/user-attachments/assets/221a085b-2570-435e-b73a-77f37f3c995a)
+![Mobile View](https://github.com/user-attachments/assets/2465650f-a36b-4923-a972-d5a8ef99121e)
 
-![Screenshot 2025-04-25 155515](https://github.com/user-attachments/assets/b4b58013-d967-41ca-a958-3b4419411288)
-
-
-![Screenshot 2025-04-25 155531](https://github.com/user-attachments/assets/221a085b-2570-435e-b73a-77f37f3c995a)
-
-![Screenshot 2025-04-25 155651](https://github.com/user-attachments/assets/2465650f-a36b-4923-a972-d5a8ef99121e)
-
-
-
- Technologies Used:
-•	Programming Languages: JavaScript, HTML, CSS
-•	Frameworks/Tools: Node.js, Express.js, EJS,BootStrap
-•	Databases: MongoDB
-•	Version control : git and github
-•	Other Technologies: Cloudinary, MapBox.
-
-Technical Overview:
-•	Implemented client and server-side authentication and authorization using sessions.
-•	Stored and managed hotel images in the cloud using Cloudinary.
-•	MapBox for location services and showing maps.
-•	Utilized middleware,routing to help with clean and readable code.
-•	Applied comprehensive error handling to ensure application stability and a smooth user experience.
-•	Applied error handling to ensure application stability and a smooth user experience.
-
-
-
+---
